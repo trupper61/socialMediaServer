@@ -14,10 +14,10 @@ namespace socialMediaServer
         Socket client;
         public ServerThread(Socket cs) 
         {
-
+            this.client = cs;
         }
 
-        public void run()
+        public static void HandleConnection()
         {
             while(true) 
             {

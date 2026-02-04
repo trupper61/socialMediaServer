@@ -10,6 +10,8 @@ namespace socialMediaServer
     {
         static void Main(string[] args)
         {
+            Server server = new Server(5555);
+
         }
     }
 }

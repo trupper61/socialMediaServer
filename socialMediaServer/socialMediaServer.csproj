@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SocketAbi">
-      <HintPath>..\..\..\..\..\Downloads\SocketAbi.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\SocketAbi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
