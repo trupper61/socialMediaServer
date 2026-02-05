@@ -9,13 +9,19 @@ namespace socialMediaServer
     public class Nutzer
     {
         private string benutzerName;
+        public string BenutzerName { get => benutzerName; }
         private string passwort;
+        public string Passwort { get => passwort; }
         private string email;
+        public string Email { get => email; }
         private DateTime zuletztAktiv;
+        public DateTime ZuletztAktiv { get => zuletztAktiv; }
         private List<Nutzer> abonnenten;
         private List<Nutzer> abonnierteNutzer;
+        public List<Nutzer> AbonnierteNutzer { get => abonnierteNutzer; }
         private List<Beitrag> beitraege;
-        // bilder Liste
+        public List<Beitrag> Beitraege { get => beitraege; }
+        private List<Bild> bilder;
 
         public Nutzer(string name, string passwort, string email)
         {
@@ -26,10 +32,45 @@ namespace socialMediaServer
             abonnenten = new List<Nutzer>();
             abonnierteNutzer = new List<Nutzer>();
             beitraege = new List<Beitrag>();
-
+            bilder = new List<Bild>();
+        }
+        public Beitrag ErstelleBeitrag(string titel, Bild bild)
+        {
+            zuletztAktiv = DateTime.Now;
+            HinzufuegenBild(bild);
+            Beitrag beitrag = new Beitrag(this, titel, bild);
+            beitraege.Add(beitrag);
+            return beitrag;
+        }
+        public Beitrag ErstelleBeitrag(string titel, Bild bild, string text)
+        {
+            Beitrag beitrag = ErstelleBeitrag(titel, bild);
+            beitrag.ErstelleText(text);
+            return beitrag;
         }
 
+        public void Abonnieren(Nutzer n)
+        {
+            zuletztAktiv = DateTime.Now;
+            if (!abonnierteNutzer.Contains(n) && n != this)
+            {
+                abonnierteNutzer.Add(n);
+                n.abonnenten.Add(this);
+            }
+        }
 
-
+        public void Like(Beitrag beitrag)
+        {
+            zuletztAktiv = DateTime.Now;
+            if (!beitraege.Contains(beitrag))
+            {
+                beitrag.Like();
+            }
+        }
+        public void HinzufuegenBild(Bild bild)
+        {
+            zuletztAktiv = DateTime.Now;
+            bilder.Add(bild);
+        }
     }
 }

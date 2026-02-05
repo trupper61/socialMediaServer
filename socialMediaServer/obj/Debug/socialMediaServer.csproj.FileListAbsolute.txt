@@ -1,0 +1,7 @@
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\bin\Debug\socialMediaServer.exe.config
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\bin\Debug\socialMediaServer.exe
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\bin\Debug\socialMediaServer.pdb
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.csproj.AssemblyReference.cache
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.exe
+D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.pdb

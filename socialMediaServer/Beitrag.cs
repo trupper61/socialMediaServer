@@ -9,23 +9,24 @@ namespace socialMediaServer
     public class Beitrag
     {
         private DateTime geposted;
+        public DateTime Geposted { get => geposted; }
         private string titel;
         private int anzahlLikes;
         private Nutzer autor;
         private Text text;
-
-        public Beitrag(Nutzer autor, string titel)
+        private List<Bild> bilder;
+        public Beitrag(Nutzer autor, string titel, Bild bild)
         {
             this.autor = autor;
             this.titel = titel;
             anzahlLikes = 0;
             geposted = DateTime.Now;
-            // Bild hinzufuegen
+            Hinzufuegen(bild);
         }
 
-        public void Hinzufuegen()
+        public void Hinzufuegen(Bild bild)
         {
-            // Bild
+            bilder.Add(bild);
         }
 
         public void ErstelleText(string text)
