@@ -24,7 +24,7 @@ namespace socialMediaServer
             {
                 Socket client = Serversocket.Accept();
                 ServerThread thread = new ServerThread(client);
-                Thread tc = new Thread(new ThreadStart(ServerThread.HandleConnection));
+                Thread tc = new Thread(new ThreadStart(thread.HandleConnection));
             }
             
         } 

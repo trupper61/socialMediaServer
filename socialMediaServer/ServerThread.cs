@@ -17,7 +17,7 @@ namespace socialMediaServer
             this.client = cs;
         }
 
-        public static void HandleConnection()
+        public void HandleConnection()
         {
             while(true) 
             {
