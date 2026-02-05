@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|c:\\users\\ruper\\source\\repos\\socialmediaserver\\socialmediaserver\\beitrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|solutionrelative:socialmediaserver\\beitrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|c:\\users\\ruper\\source\\repos\\socialmediaserver\\socialmediaserver\\nutzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|solutionrelative:socialmediaserver\\nutzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|c:\\users\\ruper\\source\\repos\\socialmediaserver\\socialmediaserver\\socialmediaplatform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|solutionrelative:socialmediaserver\\socialmediaplatform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|c:\\users\\ruper\\source\\repos\\socialmediaserver\\socialmediaserver\\text.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|solutionrelative:socialmediaserver\\text.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|c:\\users\\ruper\\source\\repos\\socialmediaserver\\socialmediaserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E43186EA-673A-4F88-A047-2225156566FF}|socialMediaServer\\socialMediaServer.csproj|solutionrelative:socialmediaserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,17 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SocialMediaPlatform.cs",
+              "DocumentMoniker": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\SocialMediaPlatform.cs",
+              "RelativeDocumentMoniker": "socialMediaServer\\SocialMediaPlatform.cs",
+              "ToolTip": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\SocialMediaPlatform.cs",
+              "RelativeToolTip": "socialMediaServer\\SocialMediaPlatform.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T13:33:38.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Text.cs",
+              "DocumentMoniker": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Text.cs",
+              "RelativeDocumentMoniker": "socialMediaServer\\Text.cs",
+              "ToolTip": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Text.cs",
+              "RelativeToolTip": "socialMediaServer\\Text.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T13:33:28.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Beitrag.cs",
+              "DocumentMoniker": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Beitrag.cs",
+              "RelativeDocumentMoniker": "socialMediaServer\\Beitrag.cs",
+              "ToolTip": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Beitrag.cs",
+              "RelativeToolTip": "socialMediaServer\\Beitrag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T13:33:23.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Nutzer.cs",
+              "DocumentMoniker": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Nutzer.cs",
+              "RelativeDocumentMoniker": "socialMediaServer\\Nutzer.cs",
+              "ToolTip": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Nutzer.cs",
+              "RelativeToolTip": "socialMediaServer\\Nutzer.cs",
+              "ViewState": "AgIAAAsAAABgZmZmZmYowBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T13:31:25.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Program.cs",
               "RelativeDocumentMoniker": "socialMediaServer\\Program.cs",
               "ToolTip": "C:\\Users\\ruper\\source\\repos\\socialMediaServer\\socialMediaServer\\Program.cs",
               "RelativeToolTip": "socialMediaServer\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-03T13:13:38.239Z",
               "EditorCaption": ""
