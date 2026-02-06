@@ -4,12 +4,15 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace socialMediaServer
 {
     public class SocialMediaPlatform
     {
         private List<Nutzer> nutzer;
+        private string connectionString = "Server=127.0.0.1;Port=3306;Database=smpdb;User=root;Password=;";
 
         public SocialMediaPlatform()
         {
@@ -17,15 +20,25 @@ namespace socialMediaServer
         }
         public int Registrieren(string name, string passwort, string email)
         {
-            foreach (Nutzer n in nutzer)
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            MySqlCommand checkSelect = new MySqlCommand("SELECT COUNT(*) FROM nutzer WHERE benutzerName=@benutzerName OR email=@email", conn);
+            checkSelect.Parameters.AddWithValue("@benutzerName", name);
+            checkSelect.Parameters.AddWithValue("@email", email);
+            if (Convert.ToInt32(checkSelect.ExecuteScalar()) > 0)
             {
-                if (n.BenutzerName == name || n.Email == email)
-                {
-                    return -1;
-                }
+                return -1;
             }
+
+            MySqlCommand insert = new MySqlCommand("INSERT INTO nutzer (benutzerName, passwort, email, zuletztAktiv) VALUES (@benutzerName, @pass, @email, @aktiv)", conn);
+            insert.Parameters.AddWithValue("@benutzerName", name);
+            insert.Parameters.AddWithValue("@pass", passwort);
+            insert.Parameters.AddWithValue("@email", email);
+            insert.Parameters.AddWithValue("@aktiv", DateTime.Now);
+            insert.ExecuteNonQuery();
+
             Nutzer neuerNutzer = new Nutzer(name, passwort, email);
-            nutzer.Add(neuerNutzer);
             return 0;
         }
         public Nutzer Anmelden(string name, string passwort)
