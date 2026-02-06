@@ -5,3 +5,8 @@ D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaSer
 D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.exe
 D:\Documents\GitHub\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.pdb
+C:\Users\ruper\source\repos\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.csproj.AssemblyReference.cache
+C:\Users\ruper\source\repos\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.exe.config
+C:\Users\ruper\source\repos\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.csproj.CoreCompileInputs.cache
+C:\Users\ruper\source\repos\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.exe
+C:\Users\ruper\source\repos\socialMediaServer\socialMediaServer\obj\Debug\socialMediaServer.pdb

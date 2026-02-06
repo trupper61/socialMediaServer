@@ -51,6 +51,8 @@
     <Compile Include="Nutzer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="ServerThread.cs" />
     <Compile Include="SocialMediaPlatform.cs" />
     <Compile Include="Text.cs" />
   </ItemGroup>
