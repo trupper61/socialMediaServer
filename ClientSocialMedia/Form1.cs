@@ -20,8 +20,6 @@ namespace ClientSocialMedia
         public Form1()
         {
             InitializeComponent();
-            this.Width = 1080;
-            this.Height = 720;
             ErstellePanel();
         }
 
@@ -97,9 +95,25 @@ namespace ClientSocialMedia
                 BackColor = Color.White,
                 Text = "Chat"
             };
+            Button buttonGruppen = new Button()
+            {
+                Size = new Size(215, 60),
+                Location = new Point(10, 190),
+                BackColor = Color.White,
+                Text = "Gruppen"
+            };
+            Button buttonSuchen = new Button()
+            {
+                Size = new Size(215, 60),
+                Location = new Point(10, 250),
+                BackColor = Color.White,
+                Text = "Suchen"
+            };
             menuPanel.Controls.Add(buttonBeitraege);
             menuPanel.Controls.Add(buttonBeliebt);
             menuPanel.Controls.Add(buttonChat);
+            menuPanel.Controls.Add(buttonGruppen);
+            menuPanel.Controls.Add(buttonSuchen);
         }
 
         private void tbNutzername_Click(object sender, EventArgs e) 
