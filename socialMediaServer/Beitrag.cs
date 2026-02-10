@@ -11,9 +11,12 @@ namespace socialMediaServer
         private DateTime geposted;
         public DateTime Geposted { get => geposted; }
         private string titel;
+        public string Titel { get => titel; }
         private int anzahlLikes;
         private Nutzer autor;
+        public Nutzer Autor { get => autor; }
         private Text text;
+        public Text Text { get => text; }
         private List<Bild> bilder;
         public Beitrag(Nutzer autor, string titel, Bild bild)
         {
@@ -21,6 +24,7 @@ namespace socialMediaServer
             this.titel = titel;
             anzahlLikes = 0;
             geposted = DateTime.Now;
+            bilder = new List<Bild>();
             Hinzufuegen(bild);
         }
 

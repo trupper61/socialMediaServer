@@ -9,13 +9,13 @@ namespace socialMediaServer
     public class Bild
     {
         private int id;
-        private static int autowert = 0;
+        private static int autowert = 1;
         private string dateiname;
+        public string Dateiname { get => dateiname; }
         public Bild(string dateiname)
         {
             this.dateiname = dateiname;
-            this.id = autowert;
-            autowert++;
+            this.id = autowert++;
         }
     }
 }

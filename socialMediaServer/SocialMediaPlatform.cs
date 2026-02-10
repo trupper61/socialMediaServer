@@ -18,6 +18,33 @@ namespace socialMediaServer
         {
             nutzer = new List<Nutzer>();
         }
+
+        public void ErstelleBeitrag(Beitrag b, Bild p)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand beitrag = new MySqlCommand("INSERT INTO beitrag (text, titel, erstelltAm, autor) VALUES (@text, @titel, @erstelltAm, @autor)", conn);
+            beitrag.Parameters.AddWithValue("@text", b.Text);
+            beitrag.Parameters.AddWithValue("@titel", b.Titel);
+            beitrag.Parameters.AddWithValue("@erstelltAm", b.Geposted);
+            beitrag.Parameters.AddWithValue("@autor", b.Autor.BenutzerId);
+            beitrag.ExecuteNonQuery();
+
+            MySqlCommand getIdBeitrag = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
+            int beitragId = Convert.ToInt32(getIdBeitrag.ExecuteScalar());
+
+            MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname)", conn);
+            bild.Parameters.AddWithValue("@dateiname", p.Dateiname);
+            bild.ExecuteNonQuery();
+            MySqlCommand getIdPicture = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
+            int bildId = Convert.ToInt32(getIdPicture.ExecuteScalar());
+
+            MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
+            inhalt.Parameters.AddWithValue("@beitragId", beitragId);
+            inhalt.Parameters.AddWithValue("@bildId", bildId);
+            inhalt.ExecuteNonQuery();
+            conn.Close();
+        }
         public int Registrieren(string name, string passwort, string email)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -39,7 +66,9 @@ namespace socialMediaServer
             insert.Parameters.AddWithValue("@aktiv", DateTime.Now);
             insert.ExecuteNonQuery();
 
-            Nutzer neuerNutzer = new Nutzer(name, passwort, email);
+            MySqlCommand getId = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
+            int id = Convert.ToInt32(getId.ExecuteScalar());
+            Nutzer neuerNutzer = new Nutzer(name, passwort, email, id);
             conn.Close();
             return 0;
         }
@@ -47,12 +76,12 @@ namespace socialMediaServer
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
-            MySqlCommand search = new MySqlCommand("SELECT passwort, email FROM nutzer WHERE benutzerName=@benutzerName", conn);
+            MySqlCommand search = new MySqlCommand("SELECT nutzerId, passwort, email FROM nutzer WHERE benutzerName=@benutzerName", conn);
             search.Parameters.AddWithValue("@benutzerName", name);
             MySqlDataReader reader = search.ExecuteReader();
             if (!reader.Read() || reader.GetString("passwort") != passwort)
                 return null;
-            Nutzer n = new Nutzer(name, passwort, reader.GetString("email"));
+            Nutzer n = new Nutzer(name, passwort, reader.GetString("email"), reader.GetInt32("nutzerId"));
             lock (nutzer)
             {
                 nutzer.Add(n);
