@@ -51,26 +51,36 @@ namespace socialMediaServer
                                 client.Write("-Error \n");
                             }
                             break;
-                        case "beitrag":
-                            string titel = parameter[1];
-                            string bildDateiname = parameter[2];
-                            string text;
-                            Bild picture = new Bild(bildDateiname);
-                            Beitrag b;
-                            if (parameter.Length >= 4)
-                            {
-                                text = parameter[3];
-                                b = this.nutzer.ErstelleBeitrag(titel, picture, text);
-                            }
+                        case "registrieren":
+                            name = parameter[1];
+                            password = parameter[2];
+                            string email = parameter[3];
+                            int code = spf.Registrieren(name, password, email);
+                            if (code == -1)
+                                client.Write("-Error;NameOrEmailVorhanden\n");
                             else
-                            {
-                                text = null;
-                                b = this.nutzer.ErstelleBeitrag(titel, picture);
-                            }
-                            spf.ErstelleBeitrag(b, picture);
-                            client.Write("+OK Hochgeladen \n");
+                                client.Write("+OK Registrierung Erfolg\n");
                             break;
-                    }
+                        case "beitrag":
+                                    string titel = parameter[1];
+                                    string bildDateiname = parameter[2];
+                                    string text;
+                                    Bild picture = new Bild(bildDateiname);
+                                    Beitrag b;
+                                    if (parameter.Length >= 4)
+                                    {
+                                        text = parameter[3];
+                                        b = this.nutzer.ErstelleBeitrag(titel, picture, text);
+                                    }
+                                    else
+                                    {
+                                        text = null;
+                                        b = this.nutzer.ErstelleBeitrag(titel, picture);
+                                    }
+                                    spf.ErstelleBeitrag(b, picture);
+                                    client.Write("+OK Hochgeladen \n");
+                                    break;
+                                }
                 }
             }
             catch (Exception e)
