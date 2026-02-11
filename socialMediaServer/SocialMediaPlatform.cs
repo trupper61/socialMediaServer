@@ -19,30 +19,30 @@ namespace socialMediaServer
             nutzer = new List<Nutzer>();
         }
 
-        public void ErstelleBeitrag(Beitrag b, Bild p)
+        public void ErstelleBeitrag(Nutzer nutzer, string titel, string text, List<string> bilder)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
-            MySqlCommand beitrag = new MySqlCommand("INSERT INTO beitrag (text, titel, erstelltAm, autor) VALUES (@text, @titel, @erstelltAm, @autor)", conn);
-            beitrag.Parameters.AddWithValue("@text", b.Text);
-            beitrag.Parameters.AddWithValue("@titel", b.Titel);
-            beitrag.Parameters.AddWithValue("@erstelltAm", b.Geposted);
-            beitrag.Parameters.AddWithValue("@autor", b.Autor.BenutzerId);
-            beitrag.ExecuteNonQuery();
 
-            MySqlCommand getIdBeitrag = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
-            int beitragId = Convert.ToInt32(getIdBeitrag.ExecuteScalar());
+            MySqlCommand beitrag = new MySqlCommand("INSERT INTO beitrag (text, titel, erstelltAm, autor) VALUES (@text, @titel, @erstelltAm, @autor); SELECT LAST_INSERT_ID()", conn);
+            beitrag.Parameters.AddWithValue("@text", text);
+            beitrag.Parameters.AddWithValue("@titel", titel);
+            beitrag.Parameters.AddWithValue("@erstelltAm", DateTime.Now);
+            beitrag.Parameters.AddWithValue("@autor", nutzer.BenutzerId);
 
-            MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname)", conn);
-            bild.Parameters.AddWithValue("@dateiname", p.Dateiname);
-            bild.ExecuteNonQuery();
-            MySqlCommand getIdPicture = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
-            int bildId = Convert.ToInt32(getIdPicture.ExecuteScalar());
+            int beitragId = Convert.ToInt32(beitrag.ExecuteScalar());
 
-            MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
-            inhalt.Parameters.AddWithValue("@beitragId", beitragId);
-            inhalt.Parameters.AddWithValue("@bildId", bildId);
-            inhalt.ExecuteNonQuery();
+            foreach (string dateiNamen in bilder)
+            {
+                MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname); SELECT LAST_INSERT_ID()", conn);
+                bild.Parameters.AddWithValue("@dateiname", dateiNamen);
+                int bildId = Convert.ToInt32(bild.ExecuteScalar());
+                MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
+                inhalt.Parameters.AddWithValue("@beitragId", beitragId);
+                inhalt.Parameters.AddWithValue("@bildId", bildId);
+                inhalt.ExecuteNonQuery();
+            }
+            
             conn.Close();
         }
         public int Registrieren(string name, string passwort, string email)
