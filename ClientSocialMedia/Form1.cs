@@ -142,7 +142,12 @@ namespace ClientSocialMedia
         }
         private void zeigeInhalte() 
         {
-            
+            inhaltAnzeige.Enabled = true;
+            inhaltAnzeige.Visible = true;
+            Inhalte inhalt = new Inhalte();
+            inhaltAnzeige.Controls.Add(inhalt);
+            Inhalte inhalt2 = new Inhalte();
+            inhaltAnzeige.Controls.Add(inhalt2);
         }
         private void tbNutzername_Click(object sender, EventArgs e) 
         {
@@ -190,7 +195,7 @@ namespace ClientSocialMedia
 
         private void NutzerRegistrieren_Click(object sender, EventArgs e) 
         {
-            
+            client.registrieren(tbNutzername.Text, tbPasswort.Text);
         }
     }
 }

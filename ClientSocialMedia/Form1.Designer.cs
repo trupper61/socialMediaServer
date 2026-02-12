@@ -66,6 +66,7 @@
             this.inhaltAnzeige.Name = "inhaltAnzeige";
             this.inhaltAnzeige.Size = new System.Drawing.Size(439, 383);
             this.inhaltAnzeige.TabIndex = 3;
+            this.inhaltAnzeige.Visible = false;
             this.inhaltAnzeige.WrapContents = false;
             // 
             // Form1

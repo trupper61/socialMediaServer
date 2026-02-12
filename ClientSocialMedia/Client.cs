@@ -29,16 +29,15 @@ namespace ClientSocialMedia
         public void anmelden(string benutzername, string passwort) 
         {
             string eingabe = $"{benutzername};{passwort}";
-            //clientSocket.Write("anmelden;"+eingabe+'\n');
-            clientSocket.Write("registrieren;" + eingabe + ";test1233@gmx.de" +'\n');
-            string msg = clientSocket.ReadLine();
-            MessageBox.Show(msg);
+            //clientSocket.Write("anmelden;" + eingabe + ";test1233@gmx.de" +'\n');
+            //string msg = clientSocket.ReadLine();
+            //MessageBox.Show(msg);
         }
 
         public void registrieren(string benutzername, string passwort) 
         {
             string eingabe = $"{benutzername};{passwort}";
-            clientSocket.Write("anmelden;"+eingabe+'\n');
+            clientSocket.Write("registrieren;"+eingabe+'\n');
             string msg = clientSocket.ReadLine();
             MessageBox.Show(msg);
         }
