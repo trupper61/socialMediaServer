@@ -33,12 +33,18 @@ namespace ClientSocialMedia
 
         public void konvertiereBilder(List<string> bilder)
         {
-            foreach(string str in bilder) 
+            foreach(string str in bilder)
             {
                 string[] newData = str.Split('|');
                 byte[] imageBytes = Convert.FromBase64String(newData[1]);
-                MemoryStream ms = new MemoryStream(imageBytes);
-                Image image = Image.FromStream(ms);
+                MemoryStream ms = new MemoryStream();
+                foreach(var b in imageBytes) 
+                {
+                    ms.WriteByte(b);
+                    ms.Position = 0;
+                    Image img = Image.FromStream(ms);
+                    anzeigeBilder.Add(img);
+                }
             }
         }
     }
