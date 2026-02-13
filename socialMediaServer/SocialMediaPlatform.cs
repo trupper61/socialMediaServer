@@ -19,30 +19,30 @@ namespace socialMediaServer
             nutzer = new List<Nutzer>();
         }
 
-        public void ErstelleBeitrag(Beitrag b, Bild p)
+        public void ErstelleBeitrag(Nutzer nutzer, string titel, string text, List<string> bilder)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
-            MySqlCommand beitrag = new MySqlCommand("INSERT INTO beitrag (text, titel, erstelltAm, autor) VALUES (@text, @titel, @erstelltAm, @autor)", conn);
-            beitrag.Parameters.AddWithValue("@text", b.Text);
-            beitrag.Parameters.AddWithValue("@titel", b.Titel);
-            beitrag.Parameters.AddWithValue("@erstelltAm", b.Geposted);
-            beitrag.Parameters.AddWithValue("@autor", b.Autor.BenutzerId);
-            beitrag.ExecuteNonQuery();
 
-            MySqlCommand getIdBeitrag = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
-            int beitragId = Convert.ToInt32(getIdBeitrag.ExecuteScalar());
+            MySqlCommand beitrag = new MySqlCommand("INSERT INTO beitrag (text, titel, erstelltAm, autor) VALUES (@text, @titel, @erstelltAm, @autor); SELECT LAST_INSERT_ID()", conn);
+            beitrag.Parameters.AddWithValue("@text", text);
+            beitrag.Parameters.AddWithValue("@titel", titel);
+            beitrag.Parameters.AddWithValue("@erstelltAm", DateTime.Now);
+            beitrag.Parameters.AddWithValue("@autor", nutzer.BenutzerId);
 
-            MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname)", conn);
-            bild.Parameters.AddWithValue("@dateiname", p.Dateiname);
-            bild.ExecuteNonQuery();
-            MySqlCommand getIdPicture = new MySqlCommand("SELECT LAST_INSERT_ID()", conn);
-            int bildId = Convert.ToInt32(getIdPicture.ExecuteScalar());
+            int beitragId = Convert.ToInt32(beitrag.ExecuteScalar());
 
-            MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
-            inhalt.Parameters.AddWithValue("@beitragId", beitragId);
-            inhalt.Parameters.AddWithValue("@bildId", bildId);
-            inhalt.ExecuteNonQuery();
+            foreach (string dateiNamen in bilder)
+            {
+                MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname); SELECT LAST_INSERT_ID()", conn);
+                bild.Parameters.AddWithValue("@dateiname", dateiNamen);
+                int bildId = Convert.ToInt32(bild.ExecuteScalar());
+                MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
+                inhalt.Parameters.AddWithValue("@beitragId", beitragId);
+                inhalt.Parameters.AddWithValue("@bildId", bildId);
+                inhalt.ExecuteNonQuery();
+            }
+            
             conn.Close();
         }
         public int Registrieren(string name, string passwort, string email)
@@ -112,6 +112,82 @@ namespace socialMediaServer
             passwort[z2] = (char)(rand.Next(10) + '0');
             passwort[z3] = (char)(rand.Next(4) + '#');
             return passwort;
+        }
+        public List<Beitrag> ErmittleNeueBeitraege(Nutzer n)
+        {
+            List<Beitrag> beitraege = new List<Beitrag>();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand neusteBeitraege = new MySqlCommand(@"
+                SELECT b.beitragid, b.text, b.titel, b.erstelltAm, b.autor, u.benutzerName
+                FROM beitrag b
+                JOIN nutzer u ON b.autor = u.nutzerId
+                WHERE b.erstelltAm > @zuletztAktiv
+                ORDER BY b.erstelltAm DESC
+                LIMIT 10", conn);
+            neusteBeitraege.Parameters.AddWithValue("@nutzerId", n);
+            neusteBeitraege.Parameters.AddWithValue("@zuletztAktiv", n.ZuletztAktiv);
+            MySqlDataReader reader = neusteBeitraege.ExecuteReader();
+            while (reader.Read())
+            {
+                beitraege.Add(LeseBeitrag(reader));
+            }
+            reader.Close();
+            if (beitraege.Count < 10)
+            {
+                int remaining = 10 - beitraege.Count;
+                MySqlCommand alteBeitraege = new MySqlCommand(@"
+                    SELECT b.beitragId, b.titel, b.text, b.erstelltAm, b.autor, u.benutzerName
+                    FROM beitrag b
+                    JOIN nutzer u ON b.autor = u.nutzerId
+                    WHERE b.erstelltAm <= @zuletztAktiv
+                    ORDER BY b.erstelltAm DESC
+                    LIMIT @max", conn);
+                alteBeitraege.Parameters.AddWithValue("@zuletztAktiv", n.ZuletztAktiv);
+                alteBeitraege.Parameters.AddWithValue("@max", remaining);
+                reader = alteBeitraege.ExecuteReader();
+                while (reader.Read())
+                {
+                    beitraege.Add(LeseBeitrag(reader));
+                }
+                reader.Close();
+            }
+            conn.Close();
+            return beitraege;
+        }
+        private Beitrag LeseBeitrag(MySqlDataReader reader)
+        {
+            int beitragId = reader.GetInt32("beitragId");
+            string titel = reader.GetString("titel");
+            string text;
+            if (reader.IsDBNull(reader.GetOrdinal("text")))
+                text = null;
+            else
+                text = reader.GetString("text");
+            DateTime erstelltAm = reader.GetDateTime("erstelltAm");
+            int autorId = reader.GetInt32("autor");
+            string autorName = reader.GetString("benutzerName");
+
+            Nutzer autor = new Nutzer(autorName, "", "", autorId);
+            Beitrag b = new Beitrag(autor, titel, new List<Bild>());
+            b.Id = beitragId;
+            if (text != null)
+                b.ErstelleText(text);
+            return b;
+        }
+        public List<Bild> HoleBilder(int beitragId)
+        {
+            List<Bild> bilder = new List<Bild>();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand get = new MySqlCommand("SELECT b.dateiname FROM inhalt i JOIN bild b ON i.bildId = b.bildid WHERE i.beitragIdFK = @beitragid", conn);
+            get.Parameters.AddWithValue("@beitragid", beitragId);
+            MySqlDataReader reader = get.ExecuteReader();
+            while (reader.Read())
+            {
+                bilder.Add(new Bild(reader.GetString("dateiname")));
+            }
+            return bilder;
         }
         public List<Nutzer> ErmittleAbonnierteNutzerMitNeuenBeitraegen(Nutzer n)
         {
