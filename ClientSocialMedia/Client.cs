@@ -17,7 +17,7 @@ namespace ClientSocialMedia
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
-            this.clientSocket = new SocketAbi.Socket("192.168.137.1", 5555);
+            this.clientSocket = new SocketAbi.Socket("10.1.2.186", 5555);
             Verbinden();
         }
 
@@ -29,14 +29,14 @@ namespace ClientSocialMedia
         public void anmelden(string benutzername, string passwort) 
         {
             string eingabe = $"{benutzername};{passwort}";
-            //clientSocket.Write("anmelden;" + eingabe + ";test1233@gmx.de" +'\n');
-            //string msg = clientSocket.ReadLine();
-            //MessageBox.Show(msg);
+            clientSocket.Write("anmelden;" + eingabe +'\n');
+            string msg = clientSocket.ReadLine();
+            MessageBox.Show(msg);
         }
 
-        public void registrieren(string benutzername, string passwort) 
+        public void registrieren(string benutzername, string passwort, string email) 
         {
-            string eingabe = $"{benutzername};{passwort}";
+            string eingabe = $"{benutzername};{passwort};{email}";
             clientSocket.Write("registrieren;"+eingabe+'\n');
             string msg = clientSocket.ReadLine();
             MessageBox.Show(msg);

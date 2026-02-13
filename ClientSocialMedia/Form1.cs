@@ -18,6 +18,7 @@ namespace ClientSocialMedia
         private Panel panel;
         private Button registrieren;
         private Button anmeldeButton;
+        private TextBox email;
         private bool registerToggle = false;
         public static Client client = new Client();
         public Form1()
@@ -80,8 +81,18 @@ namespace ClientSocialMedia
                 BackColor = Color.White,
                 Text = "Noch kein Nutzer?"
             };
+            email = new TextBox()
+            {
+                Visible = false,
+                Width = 150,
+                Height = 15,
+                Location = new Point(0, anmelden.Location.Y + 60),
+                Text = "Email Eingeben"
+            };
+            email.Click += email_Click;
             panel.Controls.Add(anmeldeButton);
             panel.Controls.Add(registrieren);
+            panel.Controls.Add(email);
             if(!registerToggle) 
             {
                 anmeldeButton.Click += anmeldeButton_Click;
@@ -89,7 +100,7 @@ namespace ClientSocialMedia
             }
             else if(registerToggle) 
             {
-                anmeldeButton.Click += NutzerRegistrieren_Click;
+                anmeldeButton.Click += anmeldeButton_Click;
             } 
                     
         }
@@ -162,7 +173,12 @@ namespace ClientSocialMedia
 
             t.Text = "";
         }
+        private void email_Click(object sender, EventArgs e)
+        {
+            TextBox t = (TextBox)sender;
 
+            t.Text = "";
+        }
         private void anmeldeButton_Click(object sender, EventArgs e) 
         {
             if(!registerToggle) 
@@ -170,6 +186,11 @@ namespace ClientSocialMedia
                 client.anmelden(tbNutzername.Text, tbPasswort.Text);
                 panel.Hide();
                 zeigeProgram();
+            }
+            if(registerToggle) 
+            {
+                NutzerRegistrieren();
+            
             }
         }
         private void registrieren_Click(object sender, EventArgs e) 
@@ -180,6 +201,9 @@ namespace ClientSocialMedia
                 tbPasswort.Text = "Passwort festlegen...";
                 registrieren.Text = "Anmelden";
                 anmeldeButton.Text = "Registrieren";
+                email.Visible = true;
+                registrieren.Location = new Point(registrieren.Location.X, registrieren.Location.Y + 20);
+                anmeldeButton.Location = new Point(anmeldeButton.Location.X, anmeldeButton.Location.Y + 20);
                 registerToggle = true;
             }
             else 
@@ -188,14 +212,16 @@ namespace ClientSocialMedia
                 tbPasswort.Text = "Passwort...";
                 registrieren.Text = "Noch kein Nutzer?";
                 anmeldeButton.Text = "Anmelden";
+                registrieren.Location = new Point(registrieren.Location.X, registrieren.Location.Y - 20);
+                anmeldeButton.Location = new Point(anmeldeButton.Location.X, anmeldeButton.Location.Y - 20);
                 registerToggle = false;
             }
             
         }
 
-        private void NutzerRegistrieren_Click(object sender, EventArgs e) 
+        private void NutzerRegistrieren() 
         {
-            client.registrieren(tbNutzername.Text, tbPasswort.Text);
+            client.registrieren(tbNutzername.Text, tbPasswort.Text, email.Text);
         }
     }
 }

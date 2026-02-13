@@ -16,5 +16,10 @@ namespace ClientSocialMedia
         {
             InitializeComponent();
         }
+
+        public void setDaten(string titel) 
+        {
+            
+        }
     }
 }
