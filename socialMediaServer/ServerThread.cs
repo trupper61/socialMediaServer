@@ -81,7 +81,7 @@ namespace socialMediaServer
                                 {
                                     Console.WriteLine("Bild fehlerhaft übertragen");
                                     client.Write("-;error while transmitting");
-                                    break;
+                                    continue;
                                 }
                                 string dateiname = pieces[0];
 
@@ -100,6 +100,32 @@ namespace socialMediaServer
                                          
                             spf.ErstelleBeitrag(this.nutzer, titel, text, dateinamen);
                             client.Write("+;Hochgeladen\n");
+                            break;
+                        case "neueBeitraege":
+                            List<Beitrag> beitraege = spf.ErmittleNeueBeitraege(this.nutzer);
+                            foreach(Beitrag b in beitraege)
+                            {
+                                foreach(Bild bild in spf.HoleBilder(b.Id))
+                                {
+                                    b.Hinzufuegen(bild);
+                                }
+                            }
+                            // Protokoll: neueBeitraege;anzahlBeitraege;id|titel|text|autor|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
+                            string msg = $"neueBeitaege;{beitraege.Count}";
+                            foreach (Beitrag b in beitraege)
+                            {
+                                msg += ";";
+                                List<string> bilderStringList = new List<string>();
+                                foreach(Bild img in b.Bilder)
+                                {
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", img.Dateiname)));
+                                    bilderStringList.Add($"{img.Dateiname}|{s}");
+                                }
+                                string bilderString = string.Join(",", bilderStringList);
+                                msg += $"{b.Id}|{b.Titel}|{b.Text}|{b.Autor.BenutzerName}|{b.Geposted}|{bilderString}";
+                            }
+
+                            client.Write(msg + "\n");
                             break;
                         }
                 }

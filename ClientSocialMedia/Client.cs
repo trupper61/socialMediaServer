@@ -37,6 +37,23 @@ namespace ClientSocialMedia
             //string msg = $"beitrag;Hallo Welt;{bilder.Count};";
             //clientSocket.Write($"{PictureMessage(bilder)}Wow das ist ja was verrücktes!\n");
             //MessageBox.Show(clientSocket.ReadLine());
+            clientSocket.Write("neueBeitraege\n");
+            Test(clientSocket.ReadLine());
+        }
+
+        // Todo: Titel Test; Sämtliche Daten teilen
+        public void Test(string msg)
+        {
+            string titel = "";
+            string[] parts = msg.Split(';');
+            int anzahl = int.Parse(parts[1]);
+            for (int i = 0; i < anzahl; i++)
+            {
+                string beitragString = parts[2 + i];
+                string[] felder = beitragString.Split('|');
+                titel += felder[1];
+            }
+            MessageBox.Show(titel);
         }
         public string PictureMessage(List<string> bilder)
         {

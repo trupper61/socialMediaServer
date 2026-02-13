@@ -8,6 +8,7 @@ namespace socialMediaServer
 {
     public class Beitrag
     {
+        public int Id { get; set; } = 0;
         private DateTime geposted;
         public DateTime Geposted { get => geposted; }
         private string titel;
@@ -18,14 +19,16 @@ namespace socialMediaServer
         private Text text;
         public Text Text { get => text; }
         private List<Bild> bilder;
-        public Beitrag(Nutzer autor, string titel, Bild bild)
+        public List<Bild> Bilder { get => bilder; }
+        public Beitrag(Nutzer autor, string titel, List<Bild> bild)
         {
             this.autor = autor;
             this.titel = titel;
             anzahlLikes = 0;
             geposted = DateTime.Now;
             bilder = new List<Bild>();
-            Hinzufuegen(bild);
+            foreach (Bild bildItem in bild) 
+                Hinzufuegen(bildItem);
         }
 
         public void Hinzufuegen(Bild bild)

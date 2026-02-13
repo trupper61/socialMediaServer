@@ -38,20 +38,6 @@ namespace socialMediaServer
             beitraege = new List<Beitrag>();
             bilder = new List<Bild>();
         }
-        public Beitrag ErstelleBeitrag(string titel, Bild bild)
-        {
-            zuletztAktiv = DateTime.Now;
-            HinzufuegenBild(bild);
-            Beitrag beitrag = new Beitrag(this, titel, bild);
-            beitraege.Add(beitrag);
-            return beitrag;
-        }
-        public Beitrag ErstelleBeitrag(string titel, Bild bild, string text)
-        {
-            Beitrag beitrag = ErstelleBeitrag(titel, bild);
-            beitrag.ErstelleText(text);
-            return beitrag;
-        }
 
         public void Abonnieren(Nutzer n)
         {
