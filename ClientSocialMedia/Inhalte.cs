@@ -37,14 +37,18 @@ namespace ClientSocialMedia
             {
                 string[] newData = str.Split('|');
                 byte[] imageBytes = Convert.FromBase64String(newData[1]);
-                MemoryStream ms = new MemoryStream();
-                foreach(var b in imageBytes) 
+                //MemoryStream ms = new MemoryStream();
+                Image x = (Bitmap)((new ImageConverter()).ConvertFrom(imageBytes));
+                foreach (var b in imageBytes) 
                 {
-                    ms.WriteByte(b);
-                    ms.Position = 0;
-                    Image img = Image.FromStream(ms);
-                    anzeigeBilder.Add(img);
+                    
+                    //ms.WriteByte(b);
+                    //ms.Position = 0;
+                    //Image img = Image.FromStream(ms);
+                    
                 }
+                anzeigeBilder.Add(x);
+
             }
         }
     }
