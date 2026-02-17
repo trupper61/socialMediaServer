@@ -99,5 +99,11 @@
   <ItemGroup>
     <None Include="Resources\empty.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\socialMediaServer\socialMediaServer.csproj">
+      <Project>{e43186ea-673a-4f88-a047-2225156566ff}</Project>
+      <Name>socialMediaServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

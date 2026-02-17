@@ -153,12 +153,24 @@ namespace ClientSocialMedia
         }
         private void zeigeInhalte() 
         {
+            EmpfangeDaten();
             inhaltAnzeige.Enabled = true;
             inhaltAnzeige.Visible = true;
-            Inhalte inhalt = new Inhalte();
+            Inhalte inhalt = new Inhalte(Client.BilderAuswaehlen(), "Test");
+            client.beitragSenden(inhalt.titel, inhalt.pictures);
             inhaltAnzeige.Controls.Add(inhalt);
-            Inhalte inhalt2 = new Inhalte();
-            inhaltAnzeige.Controls.Add(inhalt2);
+        }
+        private void EmpfangeDaten() 
+        {
+            client.beitraegeAnfragen();
+            //Server nach einer Liste aller Beiträge fragen
+            //Diese Liste wird interpretiert, d.h das jedes Element dieser Liste von Beiträgen in ein Inhalt gewandelt wird.
+            //Diese Inhalte werden auf den FlowLayoutPanel geladen. (inhaltAnzeige.Controls.Add(inhalt))
+        }
+
+        private void refresh() 
+        {
+            
         }
         private void tbNutzername_Click(object sender, EventArgs e) 
         {

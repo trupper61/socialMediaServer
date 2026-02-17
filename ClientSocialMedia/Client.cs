@@ -6,7 +6,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using socialMediaServer;
 using SocketAbi;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ClientSocialMedia
 {
@@ -17,7 +19,7 @@ namespace ClientSocialMedia
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
-            this.clientSocket = new SocketAbi.Socket("10.1.2.186", 5555);
+            this.clientSocket = new SocketAbi.Socket("localhost", 5555);
             Verbinden();
         }
 
@@ -90,11 +92,49 @@ namespace ClientSocialMedia
                 {
                     byte[] bytes = System.IO.File.ReadAllBytes(path);  // Credits: https://stackoverflow.com/questions/1497997/reliable-way-to-convert-a-file-to-a-byte
                     string picture = Convert.ToBase64String(bytes);
-                    string msg = $"{System.IO.Path.GetFileName(path)}|{picture};";
+                    string msg = $";{System.IO.Path.GetFileName(path)}|{picture}";
                     bilder.Add(msg);
                 }
             }
             return bilder;
+        }
+        public void beitragSenden(string titel, List<string> bilder) 
+        {
+            string eingabe = $"{titel};{bilder.Count}";
+            foreach (string bild in bilder) 
+            {
+                eingabe += bild;
+            } 
+            
+            clientSocket.Write("beitrag;" + eingabe + '\n');
+        }
+
+        public List<Beitrag> beitraegeAnfragen()
+        {
+            clientSocket.Write("neueBeitraege");
+            string str;
+            str = clientSocket.ReadLine();
+            string[] dataRecieved = str.Split(';');
+            foreach (string data in dataRecieved)
+            {
+                string[] relevantData = data.Split('|');
+                string titel = relevantData[1];
+                string text = relevantData[2];
+                string autor = relevantData[3];
+                int likes = Convert.ToInt32(relevantData[4]);
+
+                string[] images = data.Split(',');
+                string[] imageData = null;
+                string[] imageName = null;
+                int counter = 0;
+                foreach (string image in images) 
+                {
+                    string[] innerData = image.Split(':');
+                    imageData[counter] = innerData[1];
+                    imageName[counter] = innerData[0];
+                }
+            }
+            return null;
         }
     }
 }
