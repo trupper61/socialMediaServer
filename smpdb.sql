@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Feb 2026 um 10:34
+-- Erstellungszeit: 20. Feb 2026 um 10:53
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -51,35 +51,9 @@ INSERT INTO `beitrag` (`beitragid`, `text`, `titel`, `erstelltAm`, `autor`) VALU
 
 CREATE TABLE `bild` (
   `bildid` int(11) NOT NULL,
-  `dateiname` text NOT NULL
+  `dateiname` text NOT NULL,
+  `beitragid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `bild`
---
-
-INSERT INTO `bild` (`bildid`, `dateiname`) VALUES
-(1, '27e60095-5c0a-4c41-9e0b-18a2fab0aa68.png'),
-(2, 'bd24f52c-924b-4ddc-8994-eac4a1713bbe.png');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `inhalt`
---
-
-CREATE TABLE `inhalt` (
-  `beitragIdFK` int(11) NOT NULL,
-  `bildId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `inhalt`
---
-
-INSERT INTO `inhalt` (`beitragIdFK`, `bildId`) VALUES
-(1, 1),
-(2, 2);
 
 -- --------------------------------------------------------
 
@@ -130,14 +104,8 @@ ALTER TABLE `beitrag`
 -- Indizes für die Tabelle `bild`
 --
 ALTER TABLE `bild`
-  ADD PRIMARY KEY (`bildid`);
-
---
--- Indizes für die Tabelle `inhalt`
---
-ALTER TABLE `inhalt`
-  ADD PRIMARY KEY (`beitragIdFK`,`bildId`),
-  ADD KEY `bildId` (`bildId`);
+  ADD PRIMARY KEY (`bildid`),
+  ADD KEY `help` (`beitragid`);
 
 --
 -- Indizes für die Tabelle `likes`
@@ -185,11 +153,10 @@ ALTER TABLE `beitrag`
   ADD CONSTRAINT `autorFK` FOREIGN KEY (`autor`) REFERENCES `nutzer` (`nutzerId`);
 
 --
--- Constraints der Tabelle `inhalt`
+-- Constraints der Tabelle `bild`
 --
-ALTER TABLE `inhalt`
-  ADD CONSTRAINT `beitragFK2` FOREIGN KEY (`beitragIdFK`) REFERENCES `beitrag` (`beitragid`),
-  ADD CONSTRAINT `bildId` FOREIGN KEY (`bildId`) REFERENCES `bild` (`bildid`);
+ALTER TABLE `bild`
+  ADD CONSTRAINT `help` FOREIGN KEY (`beitragid`) REFERENCES `beitrag` (`beitragid`);
 
 --
 -- Constraints der Tabelle `likes`

@@ -34,13 +34,10 @@ namespace socialMediaServer
 
             foreach (string dateiNamen in bilder)
             {
-                MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname) VALUES (@dateiname); SELECT LAST_INSERT_ID()", conn);
+                MySqlCommand bild = new MySqlCommand("INSERT INTO bild (dateiname, beitragid) VALUES (@dateiname, @beitragid)", conn);
                 bild.Parameters.AddWithValue("@dateiname", dateiNamen);
-                int bildId = Convert.ToInt32(bild.ExecuteScalar());
-                MySqlCommand inhalt = new MySqlCommand("INSERT INTO inhalt (beitragIdFK, bildId) VALUES (@beitragId, @bildId)", conn);
-                inhalt.Parameters.AddWithValue("@beitragId", beitragId);
-                inhalt.Parameters.AddWithValue("@bildId", bildId);
-                inhalt.ExecuteNonQuery();
+                bild.Parameters.AddWithValue("@beitragid", beitragId);
+                bild.ExecuteNonQuery();
             }
             
             conn.Close();
@@ -180,7 +177,7 @@ namespace socialMediaServer
             List<Bild> bilder = new List<Bild>();
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
-            MySqlCommand get = new MySqlCommand("SELECT b.dateiname FROM inhalt i JOIN bild b ON i.bildId = b.bildid WHERE i.beitragIdFK = @beitragid", conn);
+            MySqlCommand get = new MySqlCommand("SELECT dateiname FROM bild b.beitragid = @beitragid", conn);
             get.Parameters.AddWithValue("@beitragid", beitragId);
             MySqlDataReader reader = get.ExecuteReader();
             while (reader.Read())
@@ -216,5 +213,6 @@ namespace socialMediaServer
             }
             return null;
         }
+
     }
 }
