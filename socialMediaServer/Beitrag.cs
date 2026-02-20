@@ -45,5 +45,20 @@ namespace socialMediaServer
         {
             anzahlLikes++;
         }
+
+        public int gebeAnzahlLikes() 
+        {
+            return anzahlLikes;
+        }
+
+        public void setAnzahlLikes(int value) 
+        {
+            anzahlLikes = value;
+        }
+
+        public void setGeposted(DateTime gepostet) 
+        {
+            this.geposted = gepostet;
+        }
     }
 }

@@ -80,7 +80,7 @@ namespace socialMediaServer
                                 if (pieces.Length != 2)
                                 {
                                     Console.WriteLine("Bild fehlerhaft übertragen");
-                                    client.Write("-;error while transmitting");
+                                    client.Write("-;error while transmitting\n");
                                     continue;
                                 }
                                 string dateiname = pieces[0];
@@ -110,22 +110,23 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                             }
-                            // Protokoll: neueBeitraege;anzahlBeitraege;id|titel|text|autor|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
-                            string msg = $"neueBeitaege;{beitraege.Count}";
+                            // Protokoll: neueBeitraege.anzahlBeitraege.id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
+                            string msg = $"neueBeitaege.{beitraege.Count}.";
                             foreach (Beitrag b in beitraege)
                             {
-                                msg += ";";
                                 List<string> bilderStringList = new List<string>();
                                 foreach(Bild img in b.Bilder)
                                 {
                                     string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", img.Dateiname)));
-                                    bilderStringList.Add($"{img.Dateiname}|{s}");
+                                    bilderStringList.Add($"{img.Dateiname}:{s}");
                                 }
                                 string bilderString = string.Join(",", bilderStringList);
-                                msg += $"{b.Id}|{b.Titel}|{b.Text}|{b.Autor.BenutzerName}|{b.Geposted}|{bilderString}";
+                                msg += $"{b.Id}|{b.Titel}|{b.Text}|{b.Autor.BenutzerName}|{b.gebeAnzahlLikes()}|{b.Geposted}|{bilderString}";
+                                msg += ";";
                             }
 
                             client.Write(msg + "\n");
+                            Console.WriteLine(msg);
                             break;
                         }
                 }
