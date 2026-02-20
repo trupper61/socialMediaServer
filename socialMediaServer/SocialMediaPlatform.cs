@@ -116,7 +116,7 @@ namespace socialMediaServer
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
             MySqlCommand neusteBeitraege = new MySqlCommand(@"
-                SELECT b.beitragid, b.text, b.titel, b.erstelltAm, b.autor, u.benutzerName
+                SELECT b.beitragid, b.text, b.titel, b.erstelltAm, b.autor, b.likes, u.benutzerName
                 FROM beitrag b
                 JOIN nutzer u ON b.autor = u.nutzerId
                 WHERE b.erstelltAm > @zuletztAktiv
@@ -134,7 +134,7 @@ namespace socialMediaServer
             {
                 int remaining = 10 - beitraege.Count;
                 MySqlCommand alteBeitraege = new MySqlCommand(@"
-                    SELECT b.beitragId, b.titel, b.text, b.erstelltAm, b.autor, u.benutzerName
+                    SELECT b.beitragId, b.titel, b.text, b.erstelltAm, b.autor, b.likes, u.benutzerName
                     FROM beitrag b
                     JOIN nutzer u ON b.autor = u.nutzerId
                     WHERE b.erstelltAm <= @zuletztAktiv
@@ -163,11 +163,13 @@ namespace socialMediaServer
                 text = reader.GetString("text");
             DateTime erstelltAm = reader.GetDateTime("erstelltAm");
             int autorId = reader.GetInt32("autor");
+            int likes = reader.GetInt32("likes");
             string autorName = reader.GetString("benutzerName");
 
             Nutzer autor = new Nutzer(autorName, "", "", autorId);
             Beitrag b = new Beitrag(autor, titel, new List<Bild>());
             b.Id = beitragId;
+            b.setAnzahlLikes(likes);
             if (text != null)
                 b.ErstelleText(text);
             return b;
