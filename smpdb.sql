@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Feb 2026 um 10:53
+-- Erstellungszeit: 20. Feb 2026 um 11:40
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -32,16 +32,17 @@ CREATE TABLE `beitrag` (
   `text` text DEFAULT NULL,
   `titel` text NOT NULL,
   `erstelltAm` datetime NOT NULL,
-  `autor` int(11) NOT NULL
+  `autor` int(11) NOT NULL,
+  `likes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Daten für Tabelle `beitrag`
 --
 
-INSERT INTO `beitrag` (`beitragid`, `text`, `titel`, `erstelltAm`, `autor`) VALUES
-(1, NULL, 'Test', '2026-02-13 12:54:41', 2),
-(2, NULL, 'Test', '2026-02-13 14:00:09', 2);
+INSERT INTO `beitrag` (`beitragid`, `text`, `titel`, `erstelltAm`, `autor`, `likes`) VALUES
+(1, NULL, 'Test', '2026-02-13 12:54:41', 2, 0),
+(2, NULL, 'Test', '2026-02-13 14:00:09', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -53,18 +54,6 @@ CREATE TABLE `bild` (
   `bildid` int(11) NOT NULL,
   `dateiname` text NOT NULL,
   `beitragid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `likes`
---
-
-CREATE TABLE `likes` (
-  `zeitstempel` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `benutzerName` int(11) NOT NULL,
-  `beitragId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -106,13 +95,6 @@ ALTER TABLE `beitrag`
 ALTER TABLE `bild`
   ADD PRIMARY KEY (`bildid`),
   ADD KEY `help` (`beitragid`);
-
---
--- Indizes für die Tabelle `likes`
---
-ALTER TABLE `likes`
-  ADD PRIMARY KEY (`beitragId`,`benutzerName`),
-  ADD KEY `benutzerFK` (`benutzerName`);
 
 --
 -- Indizes für die Tabelle `nutzer`
@@ -157,13 +139,6 @@ ALTER TABLE `beitrag`
 --
 ALTER TABLE `bild`
   ADD CONSTRAINT `help` FOREIGN KEY (`beitragid`) REFERENCES `beitrag` (`beitragid`);
-
---
--- Constraints der Tabelle `likes`
---
-ALTER TABLE `likes`
-  ADD CONSTRAINT `beitragId` FOREIGN KEY (`beitragId`) REFERENCES `beitrag` (`beitragid`),
-  ADD CONSTRAINT `benutzerFK` FOREIGN KEY (`benutzerName`) REFERENCES `nutzer` (`nutzerId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

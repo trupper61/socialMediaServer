@@ -128,7 +128,21 @@ namespace socialMediaServer
                             client.Write(msg + "\n");
                             Console.WriteLine(msg);
                             break;
-                        }
+
+                        case "like":   // like;2 (BeitragId)
+                            int beitragId = Convert.ToInt32(parameter[1]);
+                            int response = spf.Like(beitragId, this.nutzer.BenutzerId);
+                            if (response == -1)
+                            {
+                                Console.WriteLine("Fehler beim liken");
+                                client.Write("-;Autor kann nicht selbst liken");
+                            }
+                            else
+                            {
+                                client.Write("+;Liken Erfolgreich");
+                            }
+                            break;
+                    }
                 }
             }
             catch (Exception e)

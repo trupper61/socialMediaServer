@@ -214,5 +214,28 @@ namespace socialMediaServer
             return null;
         }
 
+        public int Like (int beitragId, int nutzerId)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand check = new MySqlCommand(@"
+                SELECT beitragid
+                FROM beitrag
+                WHERE autor = @nutzerId
+                AND beitragid = @beitragId", conn);
+            check.Parameters.AddWithValue("@nutzerId", nutzerId);
+            check.Parameters.AddWithValue("@beitragId", beitragId);
+            int verify = Convert.ToInt32(check.ExecuteScalar());
+            if (verify != 0)
+                return -1;
+            MySqlCommand like = new MySqlCommand(@"
+                UPDATE beitrag
+                SET likes += 1
+                WHERE beitragid = @beitragid", conn);
+            like.Parameters.AddWithValue("@beitragid", beitragId);
+            like.ExecuteNonQuery();
+            conn.Close();
+            return 0;
+        }
     }
 }
