@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace ClientSocialMedia
 {
@@ -58,6 +59,16 @@ namespace ClientSocialMedia
         /// </summary>
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            if (nameTb.Text.Count() < 3)
+            {
+                MessageBox.Show("Der Benutzername muss mind. 4 Zeichen lang sein");
+                return;
+            }
+            else if (!mailTb.Text.Contains("@") && mailTb.Text.Count() < 4)
+            {
+                MessageBox.Show("Die E-Mail muss eine gültige E-Mail sein");
+                return;
+            }
             string reply = Form1.client.ProfilAktualisieren(nameTb.Text, mailTb.Text);
             if (Form1.connectionLost)
                 return;

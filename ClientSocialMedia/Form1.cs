@@ -169,8 +169,7 @@ namespace ClientSocialMedia
             else if(registerToggle) 
             {
                 anmeldeButton.Click += anmeldeButton_Click;
-            } 
-                    
+            }                    
         }
         //Wird Nach Login aufgerufen. Anzeige der Gesamten UI des eigentlichen Programs.
         private void zeigeProgram() 
@@ -437,6 +436,21 @@ namespace ClientSocialMedia
 
         private void NutzerRegistrieren() 
         {
+            if (tbNutzername.Text.Count() < 3)
+            {
+                MessageBox.Show("Der Benutzername muss mind. 4 Zeichen lang sein");
+                return;
+            }
+            else if (tbPasswort.Text.Count() < 3)
+            {
+                MessageBox.Show("Das Passwort muss mind. 4 Zeichen lang sein");
+                return;
+            }
+            else if (!email.Text.Contains("@") && email.Text.Count() < 4)
+            {
+                MessageBox.Show("Die E-Mail muss eine gültige E-Mail sein");
+                return;
+            }
             client.registrieren(tbNutzername.Text, tbPasswort.Text, email.Text);
         }
 
@@ -536,6 +550,9 @@ namespace ClientSocialMedia
             profilePic.Visible = false;
             menuPanel.Visible = false;
             profilePic.Tag = null;
+            tbNutzername.Text = "Benutzername...";
+            tbPasswort.Text = "Passwort...";
+            email.Text = "E-Mail...";
             ErstellePanel();
         }
 
