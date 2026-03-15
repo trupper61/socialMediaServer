@@ -25,15 +25,6 @@ namespace ClientSocialMedia
         public Beitrag Beitrag { get => beitrag; set => beitrag = value; }
         public Nutzer Autor { get; set; }
         Kommentaruebersicht ku;
-        //public Inhalte(List<string> pictures, string titel, int beitragId)
-        //{
-        //    InitializeComponent();
-        //    pictures = new List<string>();
-        //    this.pictures = pictures;
-        //    this.titel = titel;
-        //    this.beitragId = beitragId;
-        //    setDaten(titel, pictures);
-        //}
         public Inhalte(Beitrag beitrag)
         {
             InitializeComponent();
@@ -47,7 +38,6 @@ namespace ClientSocialMedia
             ku = new Kommentaruebersicht(this.beitrag, this);
             this.Controls.Add(ku);
             ku.Visible = false;
-            //Autor = beitrag.Autor;
             if (Autor == null)
                 Autor = new Nutzer("Nutzername", "", "", beitrag.Autor.BenutzerId);
             foreach (Bild b in beitrag.Bilder)
@@ -57,7 +47,7 @@ namespace ClientSocialMedia
             }
             setDaten(pictures);
         }
-
+        //Alle Daten werden für die Existenz des Beitrags festgelegt.
         public void setDaten(List<string> bilder) 
         {
             this.beitragTitel.Text = this.titel;
@@ -95,7 +85,7 @@ namespace ClientSocialMedia
         }
         public void konvertiereBilder(List<string> bilder)
         {
-
+            //Die Übertragung von Bildern ist nur mittels Strings möglich. Die Strings werden in Bilder übersetzt und den Beitrag gegeben.
             foreach (string str in bilder)
             {
                 byte[] imageBytes = Convert.FromBase64String(str);
