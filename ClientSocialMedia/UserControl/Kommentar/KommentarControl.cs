@@ -25,7 +25,7 @@ namespace ClientSocialMedia
             nutzerId = kommentar.AutorId;
             this.kommentar = kommentar;
         }
-
+        //Alle relevanten Daten für ein Kommentar werden gesetzt
         public void setKommentar(string nutzer, string text, Kommentar kommentar) 
         {
             this.text = text;
@@ -37,7 +37,7 @@ namespace ClientSocialMedia
             this.profil.Image = Inhalte.konvertiereBild(kommentar.profil);
             this.timeLb.Text = kommentar.Timestamp.ToString("g");
         }
-
+        //Öffnen des Nutzerprofils
         private async void profil_Click(object sender, EventArgs e)
         {
             UserOverviewControl userOverview = new UserOverviewControl();

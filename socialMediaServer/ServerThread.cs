@@ -448,6 +448,14 @@ namespace socialMediaServer
                             client.Write(msg + "\n");
                             break;
                         case "empfehlung":
+
+                            //Funktionsweise: Der Empfehlungsalgorithmus holt sich zunächst alle Beiträge, die der Nutzer geliked hat.
+                            //Es wird ermittelt, welche Tags den Nutzer am meisten gefallen. Hierzu wird gezählt, wie oft ein Nutzer einen Beitrag mit einem bestimmten Tag geliked hat.
+                            //Die beliebtesten Tags werden einer Rangliste zugeordnet.
+                            //Nach bestimmung der Rangliste werden alle Beiträge dieser 3 beliebtesten Tags von der Datenbank geholt.
+                            //Zum Schluss werden Gewichtungen zugewiesen. Die Gewichtungspunkte, die ein Beitrag erhält, ist abhängig von dessen Platzierung in der Tag-Rangliste, dessen likes, und weder
+                            //der Beitrag von einem abonnierten Nutzer stammt oder nicht.
+
                             offset = 0;
                             if (parameter[1] != null)
                                 offset = Convert.ToInt32(parameter[1]);
@@ -458,6 +466,8 @@ namespace socialMediaServer
                             List<Beitrag> relevanteBeitraege = spf.HoleRelevanteBeitraege(beliebt, offset);
 
                             GewichtungZuweisen(relevanteBeitraege, beliebt, spf.ErmittleAbonnierteNutzer(this.nutzer));
+
+                            //Die Liste ist vom niedriegsten bis zum höchsten Wert sortiert. Diese Sortierung muss umgekehrt werden, damit die Beiträge mit der höchsten Gewichtung ganz oben angezeigt wird.
 
                             List<Beitrag> beitraegeSortiertNachGewichtungUnflipped = sortiereBeitraegeNachGewichtung(relevanteBeitraege, 0, relevanteBeitraege.Count - 1);
                             List<Beitrag> beitraegeSortiertNachGewichtung = new List<Beitrag>();
@@ -660,12 +670,13 @@ namespace socialMediaServer
                 int gewichtung = 0;
                 gewichtung += b.gebeAnzahlLikes();
 
+                //Je nach platzierung in dem Tag-Ranking werden Gewichtungen zugewiesen.
                 if(b.Tag == beliebt[0])
                     { gewichtung += 50; }
                 else if(b.Tag == beliebt[1])
                     { gewichtung += 25; }
                 else { gewichtung += 10; }
-
+                //Extra-Gewichtung, wenn der Beitrag von einem Nutzer stand, die der Client abonniert hat.
                 if(nutzer.Contains(b.Autor)) 
                 {
                     gewichtung += 100;
@@ -682,6 +693,7 @@ namespace socialMediaServer
             int x = right - 1;
             var pivot = beitraege[right];
 
+            //Der Quicksort-Algorithmus nimmt das letzte Element als Pivot-Element. 
             while (i < x)
             {
                 if (beitraege[i].Gewichtung <= pivot.Gewichtung)
@@ -711,6 +723,7 @@ namespace socialMediaServer
 
             left += i + 1;
 
+            //Der Algorithmus arbeitet rekursiv. Wird festgestellt, dass das Nächste Pivot-Element an Position 0 ist, wird die Sortierte Liste ausgegeben
             if (left < right)
             {
                 beitraege = sortiereBeitraegeNachGewichtung(beitraege, left, right);
