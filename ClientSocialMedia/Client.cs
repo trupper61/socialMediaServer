@@ -26,21 +26,27 @@ namespace ClientSocialMedia
         private string benutzername;
         public Action<Beitrag> OnBeitragErhalten;
         public Action OnConnectionLost;
+        private string hostname = "127.0.0.1";
+        private int port = 5555;
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
             this.clientSocket = new SocketAbi.Socket("127.0.0.1", 5555);
-            if (!Verbinden())
-            {
-                MessageBox.Show("Server nicht erreichtbar");
-            }
+            Verbinden();
         }
-
+        /// <summary>
+        /// Versucht, eine Verbindung zum Server herzustellen und testet die Kommunikation mit einem Test
+        /// Gibt true zurück wenn das funktioniert.
+        /// Andernfalls wird false zurüclgegeben
+        /// </summary>
         public bool Verbinden() 
         {
             try
             {
+                clientSocket = new SocketAbi.Socket(hostname, port);
                 clientSocket.Connect();
+                clientSocket.Write("test\n");
+                clientSocket.ReadLine();
                 return true;
             }
             catch
@@ -70,16 +76,6 @@ namespace ClientSocialMedia
             string msg = ReadLine();
             if (msg == null) return;
             MessageBox.Show(msg);
-            //clientSocket.Write("registrieren;" + eingabe + ";test1233@gmx.de" +'\n');  // Registrieren
-            //MessageBox.Show(clientSocket.ReadLine());
-            //clientSocket.Write("anmelden;" + eingabe + '\n');
-            //MessageBox.Show(clientSocket.ReadLine());
-            //List<string> bilder = BilderAuswaehlen();  // Beitrag erstellen mit max 10 Bildern
-            //string msg = $"beitrag;Hallo Welt;{bilder.Count};";
-            //clientSocket.Write($"{PictureMessage(bilder)}Wow das ist ja was verrücktes!\n");
-            //MessageBox.Show(clientSocket.ReadLine());
-            //clientSocket.Write("neueBeitraege\n");
-            //Test(clientSocket.ReadLine());
         }
         /// <summary>
         /// Opens a dialog lets the user select pictures and encodes them to base64 (bytes just as strings) 
@@ -437,14 +433,21 @@ namespace ClientSocialMedia
                 return null;
             }
         }
-
+        /// <summary>
+        /// Methode wird aufgerufen, wenn die Verbindung zum Server verloren geht.
+        /// Es wird ein Event ausgelösen, welches bei der Form für einen Halt in der Kommunikation führen sollte,
+        /// wie auch ein Zurückwerfen zum Login-Fenster
+        /// </summary>
         private void ConnectionLost()
         {
             try
             {
                 clientSocket.Close(); 
             }
-            catch { }
+            catch 
+            { 
+
+            }
             OnConnectionLost?.Invoke();
         }
         public byte[] LadeProfilePicture()
@@ -548,15 +551,15 @@ namespace ClientSocialMedia
             return reply;
         }
 
-        public List<Nachricht> LadeNachrichten(int chat)
+        public List<Nachricht> LadeNachrichten(int chat, int offset)
         {
-            if (!Write($"loadNachrichten;{chat}\n"))
+            if (!Write($"loadNachrichten;{chat};{offset}\n"))
                 return null;
             string reply = ReadLine();
             if (reply == null ) 
                 return null;
-            string[] parts = reply.Split(';');
             List<Nachricht> nachrichten = new List<Nachricht>();
+            string[] parts = reply.Split(';');
             if (parts[0] != "+")
                 return nachrichten;
             int anzahl = Convert.ToInt32(parts[1]);
@@ -567,10 +570,11 @@ namespace ClientSocialMedia
                 string name = GetMessage(data[1]);
                 string text = GetMessage(data[2]);
                 DateTime gesendetAm = Convert.ToDateTime(data[3]);
-                string profil = data[4];
+                int nachrichtId = Convert.ToInt32(data[4]);
+                string profil = data[5];
                 Nutzer n = new Nutzer(name, "", "", benutzerId);
                 n.ProfilBild = profil;
-                nachrichten.Add(new Nachricht(chat, n, text, gesendetAm));
+                nachrichten.Add(new Nachricht(chat, n, text, gesendetAm, nachrichtId));
             }
             return nachrichten;
         }

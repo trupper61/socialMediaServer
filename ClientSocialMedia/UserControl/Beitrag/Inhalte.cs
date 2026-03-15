@@ -28,7 +28,8 @@ namespace ClientSocialMedia
         public Inhalte(Beitrag beitrag)
         {
             InitializeComponent();
-            
+            if (Form1.connectionLost)
+                return;
             this.beitrag = beitrag;
             this.pictures = new List<string>();
             this.titel = beitrag.Titel;
@@ -148,6 +149,8 @@ namespace ClientSocialMedia
         private void likeBtn_Click(object sender, EventArgs e)
         {
             string reply = Form1.client.Like(beitragId);
+            if (Form1.connectionLost)
+                return;
             string[] parts = reply.Split(';');
             MessageBox.Show(parts[1]);
             if (parts[0] == "+")
@@ -164,7 +167,9 @@ namespace ClientSocialMedia
         {
             List<Kommentar> k = new List<Kommentar>();
             k = Form1.client.LadeKommentare(this.beitrag.Id);
-            foreach(Kommentar kom in k) 
+            if (Form1.connectionLost)
+                return null;
+            foreach (Kommentar kom in k) 
             {
                 this.beitrag.kommentarHinzufuegen(kom);
             }

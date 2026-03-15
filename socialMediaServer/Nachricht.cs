@@ -12,12 +12,14 @@ namespace socialMediaServer
         public Nutzer Sender { get; set; }
         public string Text { get; set; }
         public DateTime GesendetAm { get; set; }
-        public Nachricht(int chatId, Nutzer nutzer, string text, DateTime gesendetAm)
+        public int NachrichtId { get; set; }
+        public Nachricht(int chatId, Nutzer nutzer, string text, DateTime gesendetAm, int nachrichtId)
         {
             ChatId = chatId;
             Sender = nutzer;
             Text = text;
             GesendetAm = gesendetAm;
+            NachrichtId = nachrichtId;
         }
     }
 }

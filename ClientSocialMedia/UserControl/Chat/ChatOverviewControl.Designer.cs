@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.messageTb = new System.Windows.Forms.RichTextBox();
             this.sendBtn = new System.Windows.Forms.Button();
+            this.messageTb = new System.Windows.Forms.RichTextBox();
+            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +46,24 @@
             this.bottomPanel.Size = new System.Drawing.Size(481, 70);
             this.bottomPanel.TabIndex = 0;
             // 
+            // sendBtn
+            // 
+            this.sendBtn.Location = new System.Drawing.Point(389, 27);
+            this.sendBtn.Name = "sendBtn";
+            this.sendBtn.Size = new System.Drawing.Size(64, 23);
+            this.sendBtn.TabIndex = 1;
+            this.sendBtn.Text = "Senden";
+            this.sendBtn.UseVisualStyleBackColor = true;
+            this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
+            // 
+            // messageTb
+            // 
+            this.messageTb.Location = new System.Drawing.Point(36, 6);
+            this.messageTb.Name = "messageTb";
+            this.messageTb.Size = new System.Drawing.Size(324, 61);
+            this.messageTb.TabIndex = 0;
+            this.messageTb.Text = "";
+            // 
             // messagesPanel
             // 
             this.messagesPanel.AutoScroll = true;
@@ -57,24 +75,6 @@
             this.messagesPanel.Size = new System.Drawing.Size(481, 304);
             this.messagesPanel.TabIndex = 1;
             this.messagesPanel.WrapContents = false;
-            // 
-            // messageTb
-            // 
-            this.messageTb.Location = new System.Drawing.Point(36, 6);
-            this.messageTb.Name = "messageTb";
-            this.messageTb.Size = new System.Drawing.Size(324, 61);
-            this.messageTb.TabIndex = 0;
-            this.messageTb.Text = "";
-            // 
-            // sendBtn
-            // 
-            this.sendBtn.Location = new System.Drawing.Point(389, 27);
-            this.sendBtn.Name = "sendBtn";
-            this.sendBtn.Size = new System.Drawing.Size(64, 23);
-            this.sendBtn.TabIndex = 1;
-            this.sendBtn.Text = "Senden";
-            this.sendBtn.UseVisualStyleBackColor = true;
-            this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
             // 
             // ChatOverviewControl
             // 
