@@ -61,6 +61,7 @@ namespace ClientSocialMedia
             }
             profilePic.BringToFront();
         }
+        //Das Laden aller Elemente innerhalb des Login-Bildschirms.
         public void ErstellePanel()
         {
             panel = new Panel();
@@ -166,7 +167,7 @@ namespace ClientSocialMedia
             } 
                     
         }
-
+        //Wird Nach Login aufgerufen. Anzeige der Gesamten UI des eigentlichen Programs.
         private void zeigeProgram() 
         {
             menuPanel.BackColor = Color.White;
@@ -267,6 +268,7 @@ namespace ClientSocialMedia
             menuPanel.Visible = true;
             Cursor = Cursors.Default;
         }
+        //Wird nach anmeldung ausgeführt. Die Anzeige aller neusten Beiträge ist Standard.
         private async void EmpfangeDaten() 
         {
             beitragOffset = 0;
@@ -395,6 +397,7 @@ namespace ClientSocialMedia
         }
         private void registrieren_Click(object sender, EventArgs e) 
         {
+            //Um weniger Elemente für das Handhaben von Anmelden und Registrieren zu benötigen, ist die Funktionalität der Knöpfe von dem bool "Registertoggle" abhängig.
             if(!registerToggle) 
             {
                 tbNutzername.Text = "Nutzername...";
@@ -430,7 +433,7 @@ namespace ClientSocialMedia
         {
             bilder = Client.BilderAuswaehlen();
         }
-
+        //Logik für das Erstellen eines Beitrags für den Nutzer. 
         private void erstellen_Click(object sender, EventArgs e)
         {
             laedGerade = true;
@@ -497,7 +500,7 @@ namespace ClientSocialMedia
             beitragErstellen.Click += beitragErstellen_Click;
             laedGerade = false;
         }
-
+        //Logik für das Senden des erstellten Beitrags an den Server.
         private void beitragErstellen_Click(object sender, EventArgs e) 
         {
             if(tagPick.Text == "") 

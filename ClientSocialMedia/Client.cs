@@ -20,7 +20,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace ClientSocialMedia
 {
-    public class Client
+    public class Client //Diese Klasse ist verantwortlich für alle Funktionen rund um die Kommunikation zwischen Client und Server.
     {
         public SocketAbi.Socket clientSocket;
         private string benutzername;
@@ -278,47 +278,31 @@ namespace ClientSocialMedia
         }
         public List<Beitrag> beitraegeAnfragen(bool nurAbos, bool empfehlungen, bool beliebteste, int offset = 0)
         {
-
+            //Der typ der zu erhaltenen Beiträgen wird mittels 3 bools bestimmt.
             if (nurAbos)
             {
                 if (!Write($"nurAbos;{offset}\n"))
                     return null;
-                //str = clientSocket.ReadLine();
-                //if (str == "aboBeitraege?0?")
-                //{
-                //    return null;
-                //}
             }
             else if(empfehlungen) 
             {
                 if (!Write($"empfehlung;{offset}\n"))
                     return null;
-                //str = clientSocket.ReadLine();
-                //if (str == "empfehlungen?0?")
-                //{
-                //    return null;
-                //}
             }
             else if(beliebteste) 
             {
                 if (!Write($"beliebteste;{offset}\n"))
                     return null;
             }
-            // Protokoll: neueBeitraege?anzahlBeitraege?id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
-            //msg = $"+;{b.Id};{ConvertMessage(b.Titel)};{b.Text};{b.Autor.BenutzerId};{b.gebeAnzahlLikes()};{b.Geposted};{pictues};{b.Tag}\n";
             else
             {
                 if (!Write($"neueBeitraege;{offset}\n"))
                     return null;
-
-                //str = clientSocket.ReadLine();
-                //if (str == "neueBeitaege?0?")
-                //{
-                //    return null;
-                //}
             }
             List<Beitrag> beitraege = new List<Beitrag>();
 
+            //Nach dem festgelegten Protokoll: +;anzahlBeitraege;id;titel;text;autor;anzahlLikes;timestamp;dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;... 
+            //werden alle relevanten Daten bei Empfang gespalten und ihre jeweiligen Variablen zugewiesen.
             while (true)
             {
                 string str = ReadLine();
@@ -359,56 +343,6 @@ namespace ClientSocialMedia
                 beitraege.Add(b);
             }
             return beitraege;
-
-
-            /*List<Beitrag> beitraege = new List<Beitrag>();
-            if(str == null) 
-            {
-                return null;
-            }
-            string[] dataReceived = str.Split(';');
-            string[] dataDetails = dataReceived[0].Split('?');
-            foreach (string s in dataReceived) 
-            {
-                if(string.IsNullOrWhiteSpace(s))
-                {
-                    continue;
-
-                }
-                string[] relevantData = s.Split('|');
-                string[] newRelevant = relevantData[0].Split('?');
-                int id = Convert.ToInt32(newRelevant[2]);
-                string titel = GetMessage(relevantData[1]);
-                string text = relevantData[2];
-                int autor = Convert.ToInt32(relevantData[3]);
-                List<Bild> bilder = new List<Bild>();
-                int likes = Convert.ToInt32(relevantData[4]);
-                DateTime timestamp = Convert.ToDateTime(relevantData[5]);
-                string[] images = relevantData[6].Split(',');
-                string tag = relevantData[7];
-                foreach (string image in images)
-                {
-                    string[] innerData = image.Split(':');
-                    if (innerData.Length == 2)
-                    {
-                        string imageName = innerData[0];
-                        string imageData = innerData[1];
-                        byte[] imageBytes = Convert.FromBase64String(imageData);
-                        Bild bild = new Bild(imageName);
-                        bild.bilddata = imageData;
-                        bilder.Add(bild);
-                    }
-                }
-                Beitrag b = new Beitrag(new Nutzer("Nutzer", "", "", autor), titel, bilder, tag);
-                b.Id = id;
-                b.setAnzahlLikes(likes);
-                b.setGeposted(timestamp);
-                if (!string.IsNullOrEmpty(text))
-                    b.ErstelleText(text);
-                beitraege.Add(b);
-            }
-            
-            return beitraege;*/
         }
         
         public Nutzer LadeProfil()
