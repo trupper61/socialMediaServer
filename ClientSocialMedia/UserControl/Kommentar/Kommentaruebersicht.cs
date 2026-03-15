@@ -37,7 +37,7 @@ namespace ClientSocialMedia
             kommentareAnzeigen();
         }
 
-        private void kommentareAnzeigen() 
+        public void kommentareAnzeigen() 
         {
             if(kommentare == null) { return; }
             foreach(Kommentar k in kommentare) 

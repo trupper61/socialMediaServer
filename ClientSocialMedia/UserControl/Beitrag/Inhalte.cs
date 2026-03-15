@@ -159,6 +159,7 @@ namespace ClientSocialMedia
 
         private void anzeigen_Click(object sender, EventArgs e)
         {
+            ku.kommentareAnzeigen();
             ku.Visible = true;
             ku.BringToFront();
         }

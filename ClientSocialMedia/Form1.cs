@@ -288,6 +288,7 @@ namespace ClientSocialMedia
                 i.Beitrag.SetKommentare(i.ladekomm());
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
+                i.ladeVorschau();
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "neue";
@@ -611,6 +612,7 @@ namespace ClientSocialMedia
                 i.Beitrag.SetKommentare(i.ladekomm());
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
+                i.ladeVorschau();
             }
             beitragOffset += beitraege.Count;
             loadMoreBtn.Tag = "beliebt";
@@ -634,6 +636,7 @@ namespace ClientSocialMedia
                 i.Beitrag.SetKommentare(i.ladekomm());
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
+                i.ladeVorschau();
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "abos";
@@ -658,6 +661,7 @@ namespace ClientSocialMedia
                 i.Beitrag.SetKommentare(i.ladekomm());
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
+                i.ladeVorschau();
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "empfehlung";
