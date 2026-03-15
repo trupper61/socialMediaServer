@@ -39,6 +39,7 @@ namespace ClientSocialMedia
 
         public void kommentareAnzeigen() 
         {
+            this.kommentarsektion.Controls.Clear();
             if(kommentare == null) { return; }
             foreach(Kommentar k in kommentare) 
             {
