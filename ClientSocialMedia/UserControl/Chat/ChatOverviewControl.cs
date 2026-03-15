@@ -51,7 +51,8 @@ namespace ClientSocialMedia
                 messagesPanel.Controls.Add(m);
             }
             offset += nachrichten.Count;
-            messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]); // Zur neusten Nachricht scrollen
+            if (messagesPanel.Controls.Count > 0)
+                messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]); // Zur neusten Nachricht scrollen
             messagesPanel.Controls.Add(loadOlderBtn);
             messagesPanel.Controls.SetChildIndex(loadOlderBtn, 0);
             timer.Start();
@@ -100,7 +101,8 @@ namespace ClientSocialMedia
                 messagesPanel.Controls.Add(m);
                 nachrichten.Add(n);
             }
-            messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]);
+            if (messagesPanel.Controls.Count > 0)
+                messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]);
             
         }
         /// <summary>

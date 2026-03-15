@@ -26,12 +26,12 @@ namespace ClientSocialMedia
         private string benutzername;
         public Action<Beitrag> OnBeitragErhalten;
         public Action OnConnectionLost;
-        private string hostname = "127.0.0.1";
+        private string hostname = "91.63.107.81";
         private int port = 5555;
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
-            this.clientSocket = new SocketAbi.Socket("127.0.0.1", 5555);
+            this.clientSocket = new SocketAbi.Socket("91.63.107.81", 5555);
             Verbinden();
         }
         /// <summary>
