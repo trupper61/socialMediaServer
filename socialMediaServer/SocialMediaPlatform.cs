@@ -14,7 +14,7 @@ using System.Drawing;
 using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 namespace socialMediaServer
 {
-    public class SocialMediaPlatform
+    public class SocialMediaPlatform //Größtenteils für die Handhabung zwischen Server und Datenbankanbindung zuständig.
     {
         private List<Nutzer> nutzer;
         private string connectionString = "Server=127.0.0.1;Port=3306;Database=smpdb;User=root;Password=;";
