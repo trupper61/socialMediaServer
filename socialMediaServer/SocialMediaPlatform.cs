@@ -855,24 +855,26 @@ namespace socialMediaServer
             }
         }
 
-        public List<Nachricht> LadeNachricht(int chatId)
+        public List<Nachricht> LadeNachricht(int chatId, int offset)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 List<Nachricht> nachrichten = new List<Nachricht>();
                 MySqlCommand get = new MySqlCommand(@"
-                SELECT n.text, n.senderId, n.gesendetAm, u.benutzerName, u.profilBild
+                SELECT nachrichtId, n.text, n.senderId, n.gesendetAm, u.benutzerName, u.profilBild
                 FROM chatnachricht n
                 JOIN nutzer u ON n.senderId = u.nutzerId
                 WHERE n.chatId = @c
-                ORDER BY n.gesendetAm ASC
-                LIMIT 20", conn);
+                ORDER BY n.gesendetAm DESC
+                LIMIT 10 OFFSET @offset", conn);
                 get.Parameters.AddWithValue("@c", chatId);
+                get.Parameters.AddWithValue("@offset", offset);
                 using (MySqlDataReader reader = get.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        int nachrichtId = reader.GetInt32("nachrichtId");
                         string text = reader.GetString("text");
                         int id = reader.GetInt32("senderId");
                         DateTime gesendetAm = reader.GetDateTime("gesendetAm");
@@ -881,7 +883,7 @@ namespace socialMediaServer
                         int ordinal = reader.GetOrdinal("profilBild");
                         if (!reader.IsDBNull(ordinal))
                             n.ProfilBild = reader.GetString("profilBild");
-                        nachrichten.Add(new Nachricht(chatId, n, text, gesendetAm));
+                        nachrichten.Add(new Nachricht(id, n, text, gesendetAm, nachrichtId));
                     }
                     reader.Close();
                 }

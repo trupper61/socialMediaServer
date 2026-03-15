@@ -622,15 +622,15 @@ namespace ClientSocialMedia
             return reply;
         }
 
-        public List<Nachricht> LadeNachrichten(int chat)
+        public List<Nachricht> LadeNachrichten(int chat, int offset)
         {
-            if (!Write($"loadNachrichten;{chat}\n"))
+            if (!Write($"loadNachrichten;{chat};{offset}\n"))
                 return null;
             string reply = ReadLine();
             if (reply == null ) 
                 return null;
-            string[] parts = reply.Split(';');
             List<Nachricht> nachrichten = new List<Nachricht>();
+            string[] parts = reply.Split(';');
             if (parts[0] != "+")
                 return nachrichten;
             int anzahl = Convert.ToInt32(parts[1]);
@@ -641,10 +641,11 @@ namespace ClientSocialMedia
                 string name = GetMessage(data[1]);
                 string text = GetMessage(data[2]);
                 DateTime gesendetAm = Convert.ToDateTime(data[3]);
-                string profil = data[4];
+                int nachrichtId = Convert.ToInt32(data[4]);
+                string profil = data[5];
                 Nutzer n = new Nutzer(name, "", "", benutzerId);
                 n.ProfilBild = profil;
-                nachrichten.Add(new Nachricht(chat, n, text, gesendetAm));
+                nachrichten.Add(new Nachricht(chat, n, text, gesendetAm, nachrichtId));
             }
             return nachrichten;
         }

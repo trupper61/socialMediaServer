@@ -415,11 +415,14 @@ namespace socialMediaServer
                             break;
                         case "loadNachrichten":
                             chatId = Convert.ToInt32(parameter[1]);
-                            List<Nachricht> nachrichten = spf.LadeNachricht(chatId);
+                            offset = 0;
+                            if (parameter[2] != null)
+                                offset = Convert.ToInt32(parameter[2]);
+                            List<Nachricht> nachrichten = spf.LadeNachricht(chatId, offset);
                             msg = $"+;{nachrichten.Count}";
                             foreach (Nachricht na in nachrichten)
                             {
-                                msg += $";{na.Sender.BenutzerId}|{ConvertMessage(na.Sender.BenutzerName)}|{ConvertMessage(na.Text)}|{na.GesendetAm}";
+                                msg += $";{na.Sender.BenutzerId}|{ConvertMessage(na.Sender.BenutzerName)}|{ConvertMessage(na.Text)}|{na.GesendetAm}|{na.NachrichtId}";
                                 if (na.Sender.ProfilBild != null)
                                 {
                                     byte[] picture = File.ReadAllBytes(Path.Combine(imgOrdner, "profile", na.Sender.ProfilBild));
