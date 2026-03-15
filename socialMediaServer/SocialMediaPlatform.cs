@@ -636,6 +636,18 @@ namespace socialMediaServer
                 return bilder;
             }
         }
+
+        public int UpdateZuletztAktiv(int nutzerId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("UPDATE nutzer SET zuletztAktiv = NOW() WHERE nutzerId = @n", conn);
+                cmd.Parameters.AddWithValue("@n", nutzerId);
+                cmd.ExecuteNonQuery();
+            }
+            return 0;
+        }
         /// <summary>
         /// Überprüft ob der Benutzer bereits den Abonnent abonniert hat,
         /// andernfalls wird der Nutzer abonniert

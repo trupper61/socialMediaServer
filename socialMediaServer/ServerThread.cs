@@ -117,6 +117,7 @@ namespace socialMediaServer
                                 
 
                             spf.ErstelleBeitrag(this.nutzer, titel, text, dateinamen, tag);
+                            spf.UpdateZuletztAktiv(this.nutzer.BenutzerId);
                             client.Write("+;Hochgeladen\n");
                             break;
                         case "neueBeitraege":
@@ -211,6 +212,7 @@ namespace socialMediaServer
                         case "like":   // like;2 (BeitragId)
                             beitragId = Convert.ToInt32(parameter[1]);
                             int response = spf.Like(beitragId, this.nutzer.BenutzerId);
+                            spf.UpdateZuletztAktiv(this.nutzer.BenutzerId);
                             if (response == -1)
                             {
                                 client.Write("-;Autor kann nicht selbst liken\n");
@@ -227,6 +229,7 @@ namespace socialMediaServer
                         case "abonnieren":
                             int abonnentId = Convert.ToInt32(parameter[1]);
                             response = spf.Abonnieren(this.nutzer.BenutzerId, abonnentId);
+                            spf.UpdateZuletztAktiv(this.nutzer.BenutzerId);
                             if (response == 0)
                             {
                                 client.Write("+;Abonnent erfolgreich abonniert\n");
@@ -248,6 +251,7 @@ namespace socialMediaServer
                             if (parameter.Length > 3)
                                 oberKommentarId = Convert.ToInt32(parameter[3]);
                             spf.ErstelleKommentar(beitragId, this.nutzer.BenutzerId, text, oberKommentarId);
+                            spf.UpdateZuletztAktiv(this.nutzer.BenutzerId);
                             client.Write("+;Kommentar erfolgreich erstellt\n");
                             break;
                         case "ladeKommentare":
