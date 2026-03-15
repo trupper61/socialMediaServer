@@ -256,7 +256,7 @@ namespace socialMediaServer
                 FROM beitrag b
                 JOIN nutzer u ON b.autor = u.nutzerId
                 LEFT JOIN likes l ON b.beitragid = l.beitragId
-                WHERE b.erstelltAm > @zuletztAktiv AND b.autor = (SELECT abonnentId FROM abonnement WHERE abonnierteNutzerId = (SELECT nutzerId FROM nutzer WHERE benutzername = @benutzername))
+                WHERE b.erstelltAm > @zuletztAktiv AND b.autor IN (SELECT abonnentId FROM abonnement WHERE abonnierteNutzerId = (SELECT nutzerId FROM nutzer WHERE benutzername = @benutzername))
                 GROUP BY b.beitragid
                 ORDER BY b.erstelltAm DESC
                 LIMIT 10 OFFSET @offset", conn);
@@ -279,7 +279,7 @@ namespace socialMediaServer
                     FROM beitrag b
                     JOIN nutzer u ON b.autor = u.nutzerId
                     LEFT JOIN likes l ON b.beitragid = l.beitragId
-                    WHERE b.erstelltAm <= @zuletztAktiv AND b.autor = (SELECT abonnentId FROM abonnement WHERE abonnierteNutzerId = (SELECT nutzerId FROM nutzer WHERE benutzername = @benutzername))
+                    WHERE b.erstelltAm <= @zuletztAktiv AND b.autor IN (SELECT abonnentId FROM abonnement WHERE abonnierteNutzerId = (SELECT nutzerId FROM nutzer WHERE benutzername = @benutzername))
                     GROUP BY b.beitragid
                     ORDER BY b.erstelltAm DESC
                     LIMIT 10 OFFSET @offset", conn);
