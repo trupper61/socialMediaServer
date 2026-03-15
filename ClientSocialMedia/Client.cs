@@ -20,10 +20,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace ClientSocialMedia
 {
-    /// <summary>
-    /// Client, der sich mit dem Server verbindet und Nachrichten/Beiträge austauscht
-    /// </summary>
-    public class Client
+    public class Client //Diese Klasse ist verantwortlich für alle Funktionen rund um die Kommunikation zwischen Client und Server.
     {
         public SocketAbi.Socket clientSocket;
         private string benutzername;
@@ -277,47 +274,31 @@ namespace ClientSocialMedia
         }
         public List<Beitrag> beitraegeAnfragen(bool nurAbos, bool empfehlungen, bool beliebteste, int offset = 0)
         {
-
+            //Der typ der zu erhaltenen Beiträgen wird mittels 3 bools bestimmt.
             if (nurAbos)
             {
                 if (!Write($"nurAbos;{offset}\n"))
                     return null;
-                //str = clientSocket.ReadLine();
-                //if (str == "aboBeitraege?0?")
-                //{
-                //    return null;
-                //}
             }
             else if(empfehlungen) 
             {
                 if (!Write($"empfehlung;{offset}\n"))
                     return null;
-                //str = clientSocket.ReadLine();
-                //if (str == "empfehlungen?0?")
-                //{
-                //    return null;
-                //}
             }
             else if(beliebteste) 
             {
                 if (!Write($"beliebteste;{offset}\n"))
                     return null;
             }
-            // Protokoll: neueBeitraege?anzahlBeitraege?id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
-            //msg = $"+;{b.Id};{ConvertMessage(b.Titel)};{b.Text};{b.Autor.BenutzerId};{b.gebeAnzahlLikes()};{b.Geposted};{pictues};{b.Tag}\n";
             else
             {
                 if (!Write($"neueBeitraege;{offset}\n"))
                     return null;
-
-                //str = clientSocket.ReadLine();
-                //if (str == "neueBeitaege?0?")
-                //{
-                //    return null;
-                //}
             }
             List<Beitrag> beitraege = new List<Beitrag>();
 
+            //Nach dem festgelegten Protokoll: +;anzahlBeitraege;id;titel;text;autor;anzahlLikes;timestamp;dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;... 
+            //werden alle relevanten Daten bei Empfang gespalten und ihre jeweiligen Variablen zugewiesen.
             while (true)
             {
                 string str = ReadLine();
@@ -596,58 +577,6 @@ namespace ClientSocialMedia
                 nachrichten.Add(new Nachricht(chat, n, text, gesendetAm, nachrichtId));
             }
             return nachrichten;
-        }
-
-        public List<Beitrag> sortiereBeitraegeNachBeliebtheit(List<Beitrag> beitraege, int left, int right) 
-        {
-
-            int i = left;
-            int x = right - 1;
-            var pivot = beitraege[right];
-            
-            while(i < x) 
-            {
-                if (beitraege[i].gebeAnzahlLikes() <= pivot.gebeAnzahlLikes()) 
-                {
-                    i++;
-                }
-                if (beitraege[x].gebeAnzahlLikes() >= pivot.gebeAnzahlLikes()) 
-                {
-                    x--;
-                }
-                if (beitraege[i].gebeAnzahlLikes() >= pivot.gebeAnzahlLikes() && beitraege[x].gebeAnzahlLikes() <= pivot.gebeAnzahlLikes()) 
-                {
-                    var temp = beitraege[i];
-                    beitraege[i] = beitraege[x];
-                    beitraege[x] = temp;
-
-                    i++;
-                    x--;
-                }
-            }
-
-            if (beitraege[i].gebeAnzahlLikes() > pivot.gebeAnzahlLikes()) 
-            {
-                beitraege[right] = beitraege[i];
-                beitraege[i] = pivot;
-            }
-
-            left += i + 1;
-
-            if(left < right) 
-            {
-                beitraege = sortiereBeitraegeNachBeliebtheit(beitraege, left, right);
-            }
-            else 
-            {
-                left = 0;
-                if(right == 0) 
-                {
-                    return beitraege;
-                }
-                beitraege = sortiereBeitraegeNachBeliebtheit(beitraege, left, right - 1);
-            }
-            return beitraege;
         }
         
         public string Abmelden()

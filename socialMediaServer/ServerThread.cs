@@ -163,7 +163,7 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                             }
-                            // Protokoll: neueBeitraege.anzahlBeitraege.id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
+                            // Protokoll: +;anzahlBeitraege;id;titel;text;autor;anzahlLikes;timestamp;dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
                             msg = "";
                             if (nurAboBeitraege.Count == 0)
                             {
@@ -452,7 +452,7 @@ namespace socialMediaServer
 
                             List<Beitrag> beitraegeSortiertNachGewichtungUnflipped = sortiereBeitraegeNachGewichtung(relevanteBeitraege, 0, relevanteBeitraege.Count - 1);
                             List<Beitrag> beitraegeSortiertNachGewichtung = new List<Beitrag>();
-                            // Protokoll: neueBeitraege?anzahlBeitraege?id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
+                            // Protokoll: +;anzahlBeitraege;id;titel;text;autor;anzahlLikes;timestamp;dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
                             msg = "";
                             for(int i = beitraegeSortiertNachGewichtungUnflipped.Count - 1; i > 0; i--) 
                             {
@@ -489,7 +489,7 @@ namespace socialMediaServer
                                 offset = Convert.ToInt32(parameter[1]);
                             List<Beitrag> beitreageBeliebt = spf.HoleBeliebtesteBeitraege(offset);
 
-                            // Protokoll: neueBeitraege?anzahlBeitraege?id|titel|text|autor|anzahlLikes|timestamp|dateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
+                            // Protokoll: +;anzahlBeitraege;id;titel;text;autor;anzahlLikes;timestamp;ateinamen1:bild1,dateinamen2:bild2,..,dateinamenN:bildn;...
                             foreach (Beitrag b in beitreageBeliebt)
                             {
                                 foreach (Bild bild in spf.HoleBilder(b.Id))
@@ -570,10 +570,7 @@ namespace socialMediaServer
                 Console.WriteLine("Client getrennt.");
             }
         }
-        private void NachrichtAnClientSenden() 
-        {
-            //Alle Sendebefehle an den Client in eine Methode
-        }
+        
         /// <summary>
         /// Konvertiert nachrichten, die sonderzeichen haben können in Bytes um und dann in Base64, damit sie die Protokoll Struktur nicht brechen
         /// </summary>
@@ -671,7 +668,7 @@ namespace socialMediaServer
 
         public List<Beitrag> sortiereBeitraegeNachGewichtung(List<Beitrag> beitraege, int left, int right)
         {
-
+            //Quicksort Algorithmus für die Sortierung der Zugewiesenen Gewichtung der Beiträge
             int i = left;
             int x = right - 1;
             var pivot = beitraege[right];

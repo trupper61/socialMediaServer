@@ -24,6 +24,7 @@ namespace ClientSocialMedia
         private Button passVergessen;
         private Button generierePasswort;
         private TextBox email;
+        private PictureBox logo;
         private bool registerToggle = false;
         public List<string> bilder = new List<string>();
         private List<Beitrag> beitraege = new List<Beitrag>();
@@ -65,6 +66,7 @@ namespace ClientSocialMedia
             }
             profilePic.BringToFront();
         }
+        //Das Laden aller Elemente innerhalb des Login-Bildschirms.
         public void ErstellePanel()
         {
             panel = new Panel();
@@ -74,6 +76,15 @@ namespace ClientSocialMedia
             panel.Height = this.Height;
             this.Controls.Add(panel);
 
+            logo = new PictureBox()
+            {
+                Width = 150,
+                Height = 100,
+                BackColor = Color.Transparent,
+                BackgroundImage = Properties.Resources.logo              
+            };
+            this.Controls.Add(logo);
+            logo.BringToFront();
             Label anmelden = new Label()
             {
                 Width = 150,
@@ -161,7 +172,7 @@ namespace ClientSocialMedia
             } 
                     
         }
-
+        //Wird Nach Login aufgerufen. Anzeige der Gesamten UI des eigentlichen Programs.
         private void zeigeProgram() 
         {
             menuPanel.BackColor = Color.White;
@@ -207,17 +218,10 @@ namespace ClientSocialMedia
                 BackColor = Color.White,
                 Text = "Chat"
             };
-            Button buttonGruppen = new Button()
-            {
-                Size = new Size(215, 60),
-                Location = new Point(10, 370),
-                BackColor = Color.White,
-                Text = "Gruppen"
-            };
             Button buttonSuchen = new Button()
             {
                 Size = new Size(215, 60),
-                Location = new Point(10, 430),
+                Location = new Point(10, 370),
                 BackColor = Color.White,
                 Text = "Suchen"
             };
@@ -238,7 +242,6 @@ namespace ClientSocialMedia
             menuPanel.Controls.Add(empfehlungen);
             menuPanel.Controls.Add(buttonErstellen);
             menuPanel.Controls.Add(buttonChat);
-            menuPanel.Controls.Add(buttonGruppen);
             menuPanel.Controls.Add(buttonSuchen);
             if(!laedGerade) 
             {
@@ -270,6 +273,7 @@ namespace ClientSocialMedia
             menuPanel.Visible = true;
             Cursor = Cursors.Default;
         }
+        //Wird nach anmeldung ausgeführt. Die Anzeige aller neusten Beiträge ist Standard.
         private async void EmpfangeDaten() 
         {
             beitragOffset = 0;
@@ -290,9 +294,6 @@ namespace ClientSocialMedia
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "neue";
             inhaltAnzeige.Controls.Add(loadMoreBtn);
-            //Server nach einer Liste aller Beiträge fragen
-            //Diese Liste wird interpretiert, d.h das jedes Element dieser Liste von Beiträgen in ein Inhalt gewandelt wird.
-            //Diese Inhalte werden auf den FlowLayoutPanel geladen. (inhaltAnzeige.Controls.Add(inhalt))
         }
 
         private async void BeitragErhalten(Beitrag b)
@@ -377,6 +378,7 @@ namespace ClientSocialMedia
                 {
                     panel.Hide();
                     profilePic.Visible = true;
+                    this.Controls.Remove(logo);
                     zeigeProgram();
                 }
             }
@@ -406,6 +408,7 @@ namespace ClientSocialMedia
         }
         private void registrieren_Click(object sender, EventArgs e) 
         {
+            //Um weniger Elemente für das Handhaben von Anmelden und Registrieren zu benötigen, ist die Funktionalität der Knöpfe von dem bool "Registertoggle" abhängig.
             if(!registerToggle) 
             {
                 tbNutzername.Text = "Nutzername...";
@@ -441,7 +444,7 @@ namespace ClientSocialMedia
         {
             bilder = Client.BilderAuswaehlen();
         }
-
+        //Logik für das Erstellen eines Beitrags für den Nutzer. 
         private void erstellen_Click(object sender, EventArgs e)
         {
             laedGerade = true;
@@ -508,7 +511,7 @@ namespace ClientSocialMedia
             beitragErstellen.Click += beitragErstellen_Click;
             laedGerade = false;
         }
-
+        //Logik für das Senden des erstellten Beitrags an den Server.
         private void beitragErstellen_Click(object sender, EventArgs e) 
         {
             if(tagPick.Text == "") 
@@ -583,8 +586,6 @@ namespace ClientSocialMedia
             {
                 return;
             }
-            
-            //beitraege = client.sortiereBeitraegeNachBeliebtheit(beitraege, 0, beitraege.Count - 1);
             List<Control> controls = this.Controls.Find("Inhalte", true).ToList();
             foreach (Control c in controls)
             {
