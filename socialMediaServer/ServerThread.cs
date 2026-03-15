@@ -36,6 +36,7 @@ namespace socialMediaServer
                 {
                     //Alle daten, die vom Client empfangen werden, werden hier interpretiert.
                     //Je nach Befehl werden im SocialMediaPlatform die relevanten Methoden ausgeführt, um eine bestimmte Tätigkeit Seitens des Clients zu erfüllen.
+                    //Für die Interpretation der übersandten Daten wird sich strikt an ein Protokoll gehalten. Genaueres weiter unten.
                     string befehl = client.ReadLine();
 
                     string[] parameter = befehl.Split(';');
