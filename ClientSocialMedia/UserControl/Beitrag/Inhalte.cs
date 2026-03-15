@@ -98,7 +98,7 @@ namespace ClientSocialMedia
                 }
             }
         }
-
+        //Dasselbe wie oben nur mit einzelnen Bildern. -> Wichtig für Profilbilder
         public static Image konvertiereBild(string bild) 
         {
             if(bild == null || bild == "" || bild == "null") 
@@ -111,7 +111,7 @@ namespace ClientSocialMedia
             }
             return img;
         }
-
+        //Navigierung der jeweiligen Bildelemente
         private void next_Click(object sender, EventArgs e)
         {
             if (scrollIndex == anzeigeBilder.Count - 1)

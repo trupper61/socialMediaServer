@@ -41,7 +41,6 @@ namespace ClientSocialMedia
             Form1.client.OnConnectionLost += ConnectionLost;
             ErstellePanel();
         }
-
         private void ConnectionLost()
         {
             if (InvokeRequired)
@@ -604,6 +603,8 @@ namespace ClientSocialMedia
                 return;
             }
             List<Control> controls = this.Controls.Find("Inhalte", true).ToList();
+
+            //Laden der Beiträge in Winforms
             foreach (Control c in controls)
             {
                 Inhalte i = c as Inhalte;
@@ -688,11 +689,6 @@ namespace ClientSocialMedia
             inhaltAnzeige.Controls.Clear();
             inhaltAnzeige.Controls.Add(coc);
             coc.LoadNachrichten();
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-
         }
 
         private void verbindenBtn_Click(object sender, EventArgs e)
