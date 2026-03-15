@@ -163,7 +163,6 @@
             this.MinimumSize = new System.Drawing.Size(815, 490);
             this.Name = "Form1";
             this.Text = "s";
-            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.beitragsErstellungsPanel.ResumeLayout(false);
             this.beitragsErstellungsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePic)).EndInit();

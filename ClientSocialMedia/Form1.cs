@@ -673,11 +673,6 @@ namespace ClientSocialMedia
             coc.LoadNachrichten();
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-
-        }
-
         private void verbindenBtn_Click(object sender, EventArgs e)
         {
             if (Form1.client.Verbinden())
