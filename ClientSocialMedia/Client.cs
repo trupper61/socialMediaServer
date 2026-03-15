@@ -31,7 +31,7 @@ namespace ClientSocialMedia
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
-            this.clientSocket = new SocketAbi.Socket("91.63.107.81", 5555);
+            this.clientSocket = new SocketAbi.Socket("localhost", 5555);
             Verbinden();
         }
         /// <summary>
@@ -63,7 +63,6 @@ namespace ClientSocialMedia
             string msg = ReadLine();
             if (msg == null) return null;
             this.benutzername = benutzername;
-            MessageBox.Show(msg);
             return msg;
         }
 
@@ -75,7 +74,6 @@ namespace ClientSocialMedia
 
             string msg = ReadLine();
             if (msg == null) return;
-            MessageBox.Show(msg);
         }
         /// <summary>
         /// Opens a dialog lets the user select pictures and encodes them to base64 (bytes just as strings) 
@@ -229,7 +227,6 @@ namespace ClientSocialMedia
             string reply = ReadLine();
             if (reply == null)
                 return;
-            MessageBox.Show(reply);
         }
 
         public List<Kommentar> LadeKommentare(int beitragId)
