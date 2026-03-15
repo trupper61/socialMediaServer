@@ -26,6 +26,8 @@ namespace ClientSocialMedia
         private string benutzername;
         public Action<Beitrag> OnBeitragErhalten;
         public Action OnConnectionLost;
+        private string hostname = "127.0.0.1";
+        private int port = 5555;
         public Client()
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
@@ -40,7 +42,10 @@ namespace ClientSocialMedia
         {
             try
             {
+                clientSocket = new SocketAbi.Socket(hostname, port);
                 clientSocket.Connect();
+                clientSocket.Write("test\n");
+                clientSocket.ReadLine();
                 return true;
             }
             catch
@@ -510,7 +515,10 @@ namespace ClientSocialMedia
             {
                 clientSocket.Close(); 
             }
-            catch { }
+            catch 
+            { 
+
+            }
             OnConnectionLost?.Invoke();
         }
         public byte[] LadeProfilePicture()

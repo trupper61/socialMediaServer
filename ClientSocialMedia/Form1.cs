@@ -31,6 +31,7 @@ namespace ClientSocialMedia
         public static Client client = new Client();
         private int beitragOffset = 0;
         private bool laedGerade = false;
+        public static bool connectionLost = false;
 
         public Form1()
         {
@@ -48,11 +49,15 @@ namespace ClientSocialMedia
                 return;
             }
             MessageBox.Show("Verbindung zum Server verloren");
-            this.Close();
+            connectionLost = true;
+            verbindenBtn.Visible = true;
+            Abmelden();
         }
         public void UpdateProfilePicture()
         {
             byte[] profileBytes = client.LadeProfilePicture();
+            if (connectionLost)
+                return;
             using (MemoryStream ms = new MemoryStream(profileBytes))
             {
                 Image img = Image.FromStream(ms);
@@ -270,7 +275,7 @@ namespace ClientSocialMedia
             beitragOffset = 0;
             inhaltAnzeige.Controls.Clear();
             beitraege = await Task.Run(() => client.beitraegeAnfragen(false, false, false, beitragOffset));
-            if(beitraege == null) 
+            if(beitraege == null || connectionLost) 
             {
                 return;
             }
@@ -292,6 +297,8 @@ namespace ClientSocialMedia
 
         private async void BeitragErhalten(Beitrag b)
         {
+            if (connectionLost)
+                return;
             if (this.InvokeRequired)
                 this.Invoke((Action<Beitrag>)BeitragErhalten, b);
             else
@@ -364,6 +371,8 @@ namespace ClientSocialMedia
             if(!registerToggle) 
             {
                 string antwort = client.anmelden(tbNutzername.Text, tbPasswort.Text);
+                if (connectionLost)
+                    return;
                 if (antwort.Contains("+")) 
                 {
                     panel.Hide();
@@ -388,6 +397,8 @@ namespace ClientSocialMedia
         private void generierePasswort_Click(object sender, EventArgs e) 
         {
             string antwort = client.PasswortVergessenAktualisierung(email.Text);
+            if (connectionLost)
+                return;
             MessageBox.Show(antwort);
             this.panel.Controls.Clear();
             this.Controls.Remove(panel);
@@ -507,6 +518,8 @@ namespace ClientSocialMedia
             }
             tagPick.Visible = false;
             client.beitragSenden(titelEingabe.Text, bilder, tagPick.Text, this.textVerfassung.Text);
+            if (connectionLost)
+                return;
             beitragsErstellungsPanel.Visible = false;
             laedGerade = true;
             EmpfangeDaten();
@@ -670,6 +683,7 @@ namespace ClientSocialMedia
             {
                 MessageBox.Show("Verbindung zum Server aufgebaut");
                 verbindenBtn.Visible = false;
+                connectionLost = false;
             }
             else
             {

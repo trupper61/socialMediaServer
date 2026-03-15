@@ -551,6 +551,9 @@ namespace socialMediaServer
                             }
                             client.Write("+;fertig\n");
                             break;
+                        case "test":
+                            client.Write("+\n");
+                            break;
                     } 
                 }
             }
