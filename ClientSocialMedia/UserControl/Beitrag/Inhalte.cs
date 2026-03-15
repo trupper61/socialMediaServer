@@ -87,6 +87,8 @@ namespace ClientSocialMedia
         public void konvertiereBilder(List<string> bilder)
         {
             //Die Übertragung von Bildern ist nur mittels Strings möglich. Die Strings werden in Bilder übersetzt und den Beitrag gegeben.
+            if (anzeigeBilder.Count > 0)
+                return;
             foreach (string str in bilder)
             {
                 byte[] imageBytes = Convert.FromBase64String(str);
