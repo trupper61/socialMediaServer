@@ -94,20 +94,20 @@ namespace socialMediaServer
                                 string dateiname = pieces[0];
 
                                 byte[] bytes = Convert.FromBase64String(pieces[1]);
-                                Image img;
+                                Image image;
                                 using (MemoryStream ms = new MemoryStream(bytes))
                                 {
-                                    img = Image.FromStream(ms);
+                                    image = Image.FromStream(ms);
                                 }
-                                img = SocialMediaPlatform.CropToSquare(img);
-                                img = SocialMediaPlatform.ResizeImage(img);
+                                image = SocialMediaPlatform.CropToSquare(image);
+                                image = SocialMediaPlatform.ResizeImage(image);
 
                                 string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(dateiname);
                                 string pfad = Path.Combine(imgOrdner, "original", uniqueName);
                                 string pfad2 = Path.Combine(imgOrdner, "preview", uniqueName);
 
                                 File.WriteAllBytes(pfad, bytes);
-                                img.Save(pfad2);
+                                image.Save(pfad2);
 
                                 dateinamen.Add(uniqueName);
                             }
@@ -132,11 +132,11 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                                 List<string> bilderStrings = new List<string>();
-                                foreach (Bild img in b.Bilder)
+                                foreach (Bild imgs in b.Bilder)
                                 {
-                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", img.Dateiname)));
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", imgs.Dateiname)));
 
-                                    bilderStrings.Add($"{img.Dateiname}:{s}");
+                                    bilderStrings.Add($"{imgs.Dateiname}:{s}");
                                 }
                                 string pictues = string.Join(",", bilderStrings);
                                 string textBeitrag = b.Text.text;
@@ -176,11 +176,11 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                                 List<string> bilderStrings = new List<string>();
-                                foreach (Bild img in b.Bilder)
+                                foreach (Bild imgs in b.Bilder)
                                 {
-                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", img.Dateiname)));
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", imgs.Dateiname)));
 
-                                    bilderStrings.Add($"{img.Dateiname}:{s}");
+                                    bilderStrings.Add($"{imgs.Dateiname}:{s}");
                                 }
                                 string pictues = string.Join(",", bilderStrings);
                                 string textBeitrag = b.Text.text;
@@ -330,10 +330,17 @@ namespace socialMediaServer
                             string filename = parameter[1];
                             string base64s = parameter[2];
                             byte[] pictureByte = Convert.FromBase64String(base64s);
+                             Image img;
+                            using (MemoryStream ms = new MemoryStream(pictureByte))
+                            {
+                                img = Image.FromStream(ms);
+                            }
+                            img = SocialMediaPlatform.CropToSquare(img);
+                            img = SocialMediaPlatform.ResizeImage(img, 256);
                             string unique = Guid.NewGuid().ToString() + Path.GetExtension(filename);
                             if (this.nutzer.ProfilBild != null)
                                 File.Delete(Path.Combine(imgOrdner, "profile", this.nutzer.ProfilBild));
-                            File.WriteAllBytes(Path.Combine(imgOrdner, "profile", unique), pictureByte);
+                            img.Save(Path.Combine(imgOrdner, "profile", unique));
                             this.nutzer.ProfilBild = unique;
                             spf.AktualisiereProfilBild(this.nutzer.BenutzerId, unique);
                             client.Write("+;Profilbild hinzugefügt\n");
@@ -465,11 +472,11 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                                 List<string> bilderStrings = new List<string>();
-                                foreach (Bild img in b.Bilder)
+                                foreach (Bild imgs in b.Bilder)
                                 {
-                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", img.Dateiname)));
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", imgs.Dateiname)));
 
-                                    bilderStrings.Add($"{img.Dateiname}:{s}");
+                                    bilderStrings.Add($"{imgs.Dateiname}:{s}");
                                 }
                                 string pictues = string.Join(",", bilderStrings);
                                 string textBeitrag = b.Text.text;
@@ -497,10 +504,10 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                                 List<string> bilderStringList = new List<string>();
-                                foreach (Bild img in b.Bilder)
+                                foreach (Bild imgs in b.Bilder)
                                 {
-                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", img.Dateiname)));
-                                    bilderStringList.Add($"{img.Dateiname}:{s}");
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", imgs.Dateiname)));
+                                    bilderStringList.Add($"{imgs.Dateiname}:{s}");
                                 }
                                 string bilderString = string.Join(",", bilderStringList);
                                 string textBeitrag = b.Text.text;
@@ -540,10 +547,10 @@ namespace socialMediaServer
                                     b.Hinzufuegen(bild);
                                 }
                                 List<string> bilderStringList = new List<string>();
-                                foreach (Bild img in b.Bilder)
+                                foreach (Bild imgs in b.Bilder)
                                 {
-                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", img.Dateiname)));
-                                    bilderStringList.Add($"{img.Dateiname}:{s}");
+                                    string s = Convert.ToBase64String(File.ReadAllBytes(Path.Combine("img", "preview", imgs.Dateiname)));
+                                    bilderStringList.Add($"{imgs.Dateiname}:{s}");
                                 }
                                 string bilderString = string.Join(",", bilderStringList);
                                 string textBeitrag = b.Text.text;
