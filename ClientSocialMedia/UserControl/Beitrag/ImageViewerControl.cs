@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace ClientSocialMedia
 {
+
+    /// <summary>
+    /// Größere Ansicht der Bilder aus Inhalt
+    /// </summary>
     public partial class ImageViewerControl : UserControl
     {
         private List<Image> images;

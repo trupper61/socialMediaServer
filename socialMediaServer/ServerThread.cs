@@ -20,7 +20,7 @@ namespace socialMediaServer
         private SocialMediaPlatform spf;
         public SocketAbi.Socket client;
         private Nutzer nutzer;
-        private static string imgOrdner = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img");
+        private static string imgOrdner = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img"); // Ordner, wo sich die Bilder befinden
 
         public ServerThread(SocketAbi.Socket cs) 
         {
@@ -37,7 +37,7 @@ namespace socialMediaServer
 
                     string befehl = client.ReadLine();
 
-                    string[] parameter = befehl.Split(';');
+                    string[] parameter = befehl.Split(';'); 
                     if (parameter.Length == 0)
                         continue;
                     string command = parameter[0];
@@ -68,7 +68,7 @@ namespace socialMediaServer
                                 client.Write("+;registrierungerfolg\n");
                             break;
                         case "abmelden":
-                            client.Write($"+;Bis zum nächsten Mal {ConvertMessage(this.nutzer.BenutzerName)}!\n");
+                            client.Write($"Bis zum nächsten Mal {ConvertMessage(this.nutzer.BenutzerName)}!\n");
                             this.nutzer = null;
                             break;
                         case "beitrag":
@@ -574,6 +574,9 @@ namespace socialMediaServer
         {
             //Alle Sendebefehle an den Client in eine Methode
         }
+        /// <summary>
+        /// Konvertiert nachrichten, die sonderzeichen haben können in Bytes um und dann in Base64, damit sie die Protokoll Struktur nicht brechen
+        /// </summary>
         private string ConvertMessage(string message)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(message));

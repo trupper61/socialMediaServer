@@ -13,6 +13,9 @@ using System.Xml.Linq;
 
 namespace ClientSocialMedia
 {
+    /// <summary>
+    /// Control für ein einzelnes Suchergebnis in der Nutzer-Suche
+    /// </summary>
     public partial class UserSearchResultControl : UserControl
     {
         private Nutzer nutzer;
@@ -22,6 +25,10 @@ namespace ClientSocialMedia
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Übernimmt die Daten des Nutzers in das Control
+        /// </summary>
+        /// <param name="n"></param>
         public void Load(Nutzer n)
         {
             this.nutzer = n;

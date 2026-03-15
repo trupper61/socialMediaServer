@@ -20,6 +20,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace ClientSocialMedia
 {
+    /// <summary>
+    /// Client, der sich mit dem Server verbindet und Nachrichten/Beiträge austauscht
+    /// </summary>
     public class Client
     {
         public SocketAbi.Socket clientSocket;
@@ -32,12 +35,13 @@ namespace ClientSocialMedia
         {
             //IPAddress adress = IPAddress.Parse("10.1.2.186");
             this.clientSocket = new SocketAbi.Socket("127.0.0.1", 5555);
-            if (!Verbinden())
-            {
-                MessageBox.Show("Server nicht erreichtbar");
-            }
+            Verbinden();
         }
-
+        /// <summary>
+        /// Versucht, eine Verbindung zum Server herzustellen und testet die Kommunikation mit einem Test
+        /// Gibt true zurück wenn das funktioniert.
+        /// Andernfalls wird false zurüclgegeben
+        /// </summary>
         public bool Verbinden() 
         {
             try
@@ -75,16 +79,6 @@ namespace ClientSocialMedia
             string msg = ReadLine();
             if (msg == null) return;
             MessageBox.Show(msg);
-            //clientSocket.Write("registrieren;" + eingabe + ";test1233@gmx.de" +'\n');  // Registrieren
-            //MessageBox.Show(clientSocket.ReadLine());
-            //clientSocket.Write("anmelden;" + eingabe + '\n');
-            //MessageBox.Show(clientSocket.ReadLine());
-            //List<string> bilder = BilderAuswaehlen();  // Beitrag erstellen mit max 10 Bildern
-            //string msg = $"beitrag;Hallo Welt;{bilder.Count};";
-            //clientSocket.Write($"{PictureMessage(bilder)}Wow das ist ja was verrücktes!\n");
-            //MessageBox.Show(clientSocket.ReadLine());
-            //clientSocket.Write("neueBeitraege\n");
-            //Test(clientSocket.ReadLine());
         }
         /// <summary>
         /// Opens a dialog lets the user select pictures and encodes them to base64 (bytes just as strings) 
@@ -364,56 +358,6 @@ namespace ClientSocialMedia
                 beitraege.Add(b);
             }
             return beitraege;
-
-
-            /*List<Beitrag> beitraege = new List<Beitrag>();
-            if(str == null) 
-            {
-                return null;
-            }
-            string[] dataReceived = str.Split(';');
-            string[] dataDetails = dataReceived[0].Split('?');
-            foreach (string s in dataReceived) 
-            {
-                if(string.IsNullOrWhiteSpace(s))
-                {
-                    continue;
-
-                }
-                string[] relevantData = s.Split('|');
-                string[] newRelevant = relevantData[0].Split('?');
-                int id = Convert.ToInt32(newRelevant[2]);
-                string titel = GetMessage(relevantData[1]);
-                string text = relevantData[2];
-                int autor = Convert.ToInt32(relevantData[3]);
-                List<Bild> bilder = new List<Bild>();
-                int likes = Convert.ToInt32(relevantData[4]);
-                DateTime timestamp = Convert.ToDateTime(relevantData[5]);
-                string[] images = relevantData[6].Split(',');
-                string tag = relevantData[7];
-                foreach (string image in images)
-                {
-                    string[] innerData = image.Split(':');
-                    if (innerData.Length == 2)
-                    {
-                        string imageName = innerData[0];
-                        string imageData = innerData[1];
-                        byte[] imageBytes = Convert.FromBase64String(imageData);
-                        Bild bild = new Bild(imageName);
-                        bild.bilddata = imageData;
-                        bilder.Add(bild);
-                    }
-                }
-                Beitrag b = new Beitrag(new Nutzer("Nutzer", "", "", autor), titel, bilder, tag);
-                b.Id = id;
-                b.setAnzahlLikes(likes);
-                b.setGeposted(timestamp);
-                if (!string.IsNullOrEmpty(text))
-                    b.ErstelleText(text);
-                beitraege.Add(b);
-            }
-            
-            return beitraege;*/
         }
         
         public Nutzer LadeProfil()
@@ -508,7 +452,11 @@ namespace ClientSocialMedia
                 return null;
             }
         }
-
+        /// <summary>
+        /// Methode wird aufgerufen, wenn die Verbindung zum Server verloren geht.
+        /// Es wird ein Event ausgelösen, welches bei der Form für einen Halt in der Kommunikation führen sollte,
+        /// wie auch ein Zurückwerfen zum Login-Fenster
+        /// </summary>
         private void ConnectionLost()
         {
             try

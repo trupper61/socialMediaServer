@@ -12,6 +12,10 @@ using System.Windows.Forms;
 
 namespace ClientSocialMedia
 {
+    /// <summary>
+    /// Einzelne Untereinheit für eine Chatübersicht. Sie zeigt mit welchem Nutzer man einen Chat hat, was die letzte Nachricht war und das Profilbild des Nutzers.
+    /// Sie wird aufgelistet in ChatControl
+    /// </summary>
     public partial class ChatItemControl : UserControl
     {
         public Action<int> ChatClicked;
@@ -32,7 +36,7 @@ namespace ClientSocialMedia
                 lastLb.Text = "Noch keine Nachrichten hinterlassen!";
                 dateLb.Visible = false;
             }
-                byte[] bytes = Convert.FromBase64String(chat.ProfilBild);
+            byte[] bytes = Convert.FromBase64String(chat.ProfilBild);
             using (MemoryStream ms = new MemoryStream(bytes))
             {
                 Image img = Image.FromStream(ms);
@@ -44,7 +48,10 @@ namespace ClientSocialMedia
                 c.Click += ChatItem_Click;
             }
         }
-
+        /// <summary>
+        /// Ausgelöstes Event, wenn man einen Chat anklickt. Daraufhin wird ein weiters Event ausgelöst welches die jeweilige Chat-Id weitergibt.
+        /// Daraufhin wird der jeweillige Chat angezeigt
+        /// </summary>
         private void ChatItem_Click(object sender, EventArgs e)
         {
             ChatClicked?.Invoke(chatId);

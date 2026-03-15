@@ -23,7 +23,7 @@ namespace ClientSocialMedia
             InitializeComponent();
             this.chatId = chat;
             this.nachrichten = new List<Nachricht>();
-            timer = new Timer();
+            timer = new Timer();  // Timer, der alle 10 Sekunden überprüft ob neue Nachrichten vorhanden sind 
             timer.Interval = 10000;
             timer.Tick += (s, e) => CheckNeueNachrichten();
             loadOlderBtn = new Button()
@@ -33,11 +33,13 @@ namespace ClientSocialMedia
             };
             loadOlderBtn.Click += loadOlder_Click;
         }
-
+        /// <summary>
+        /// Lädt die ersten 10 Nachrichten eines Chats. Sie wird beim aufrufen eines Chats ausgeführt
+        /// </summary>
         public async void LoadNachrichten()
         {
             List<Nachricht> letzte = await Task.Run(() => Form1.client.LadeNachrichten(this.chatId, 0));
-            if (nachrichten == null)
+            if (nachrichten == null || Form1.connectionLost)
                 return;
             letzte.Reverse();
             nachrichten.AddRange(letzte);
@@ -49,7 +51,7 @@ namespace ClientSocialMedia
                 messagesPanel.Controls.Add(m);
             }
             offset += nachrichten.Count;
-            messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]);
+            messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]); // Zur neusten Nachricht scrollen
             messagesPanel.Controls.Add(loadOlderBtn);
             messagesPanel.Controls.SetChildIndex(loadOlderBtn, 0);
             timer.Start();
@@ -61,16 +63,34 @@ namespace ClientSocialMedia
             if (string.IsNullOrEmpty(text))
                 return;
             Form1.client.SendeNachricht(chatId, text);
+            if (Form1.connectionLost)
+                return;
             messageTb.Text = "";
             LoadNachrichten();
         }
-        
+        /// <summary>
+        /// Prüft ob neue Nachrichten vorhanden sind, wird durch einen Timer alle 10 Sekunden aufgerufen.
+        /// </summary>
         public async void CheckNeueNachrichten()
         {
             List<Nachricht> neue = await Task.Run(() => Form1.client.LadeNachrichten(chatId, 0));
             if (Form1.connectionLost || neue == null)
                 return;
-            List<Nachricht> filtered = neue.Where(n => !nachrichten.Any(existing => existing.NachrichtId == n.NachrichtId)).ToList();
+            List<Nachricht> filtered = new List<Nachricht>(); 
+            foreach (Nachricht n in neue) // Nur Nachrichten nehmen, die noch nicht angezeigt werden, also in nachrichten noch nicht vorhanden sind
+            {
+                bool exist = false;
+                foreach (Nachricht vergleichNachricht in nachrichten)
+                {
+                    if (vergleichNachricht.NachrichtId == n.NachrichtId)
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                    filtered.Add(n);
+            }
             if (filtered.Count == 0)
                 return;
             foreach (Nachricht n in filtered)
@@ -83,10 +103,15 @@ namespace ClientSocialMedia
             messagesPanel.ScrollControlIntoView(messagesPanel.Controls[messagesPanel.Controls.Count - 1]);
             
         }
+        /// <summary>
+        /// Lädt ältere Nachrichten wennder Nutzer auf dem Button klickt. Die neuen Nachrichten werden oben im chat eingefügt
+        /// </summary>
         private async void loadOlder_Click(object sender, EventArgs e)
         {
             List<Nachricht> alte = await Task.Run(() => Form1.client.LadeNachrichten(chatId, offset));
             loadOlderBtn.Enabled = false;
+            if (Form1.connectionLost)
+                return;
             if (alte.Count == 0)
             {
                 

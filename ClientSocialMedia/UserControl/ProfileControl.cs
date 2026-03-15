@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace ClientSocialMedia
 {
+    /// <summary>
+    /// Profil Ansicht, wo der Nutzer seine Daten einsehen kann als auch bearbeiten kann
+    /// </summary>
     public partial class ProfileControl : UserControl
     {
         public Action<Image> OnProfileChange;
@@ -26,7 +29,9 @@ namespace ClientSocialMedia
            
             LadeProfil();
         }
-
+        /// <summary>
+        /// Holt sich vom Server, die aktuellen Daten zum aktuellen Nutzer und gibt diese an. Wie unter anderem die Abonnentenanzahl
+        /// </summary>
         private async void LadeProfil()
         {
             
@@ -48,7 +53,9 @@ namespace ClientSocialMedia
             }
             Cursor = Cursors.Default;
         }
-
+        /// <summary>
+        /// Änderungen vom Benutzernamen und E-Mail, werden an dem Server geschickt und gespeichert.
+        /// </summary>
         private void saveBtn_Click(object sender, EventArgs e)
         {
             string reply = Form1.client.ProfilAktualisieren(nameTb.Text, mailTb.Text);
@@ -73,7 +80,11 @@ namespace ClientSocialMedia
                 saveBtn.Visible = true;
             }
         }
-
+        /// <summary>
+        /// Handelt den Passwortänderungsprozess, und sendet diesen an dem Server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void savePassword_Click(object sender, EventArgs e)
         {
             if (textBox2.Text != textBox3.Text)
@@ -81,7 +92,7 @@ namespace ClientSocialMedia
                 MessageBox.Show("Das bestätigungs Passwort stimmt nicht mit dem neuen überein");
                 return;
             }
-            else if (textBox2.Text.Length < 4)
+            else if (textBox2.Text.Length < 3)
             {
                 MessageBox.Show("Das Passwort muss mindestens 4 Zeichen lang sein");
                 return;
@@ -101,7 +112,11 @@ namespace ClientSocialMedia
             passwortPanel.Visible = false;
             saveBtn.Visible = true;
         }
-
+        /// <summary>
+        /// Handelt den profile Picture Click Event, wo der Nutzer ein neues Bild auswählen kann um sein Profilbild zu aktualisieren.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void profilePictureBtn_Click(object sender, EventArgs e)
         {
             if (Form1.connectionLost)
@@ -118,9 +133,14 @@ namespace ClientSocialMedia
                 OnProfileChange?.Invoke(Image.FromFile(filePath));
                 string pictureBytes = Convert.ToBase64String(File.ReadAllBytes(filePath));
                 string reply = Form1.client.ProfilBild(fileName, pictureBytes);
+                if (Form1.connectionLost)
+                    return;
                 MessageBox.Show(reply);
             }
         }
+        /// <summary>
+        /// Bearbeitet den Logout-Button, der Nutzer bekommt die logout Nachricht und wird ausgeloggt.
+        /// </summary>
 
         private void abmeldenBtn_Click(object sender, EventArgs e)
         {   
@@ -135,11 +155,16 @@ namespace ClientSocialMedia
         {
             OnClose?.Invoke();
         }
-
+        /// <summary>
+        /// Lädt die vom Nutzer hochgeladenen Beiträge, die einzeln angezeigt werden. Fügt einen Lade weitere Button hinzu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void loadBeitraegeBtn_Click(object sender, EventArgs e)
         {
 
             beitragOffset = 0;
+            Cursor = Cursors.WaitCursor;
             beitraege = await Task.Run(() => Form1.client.HoleNutzerBeitraege(beitragOffset));
             if (Form1.connectionLost)
                 return;
@@ -161,7 +186,11 @@ namespace ClientSocialMedia
             };
             loadMoreBtn.Click += loadMoreBtn_Click;
             this.Parent.Controls.Add(loadMoreBtn);
+            Cursor = Cursors.Default;
         }
+        /// <summary>
+        /// Button-Event für weitere Beiträge. Beim Klick, werden weitere Beiträge geladen und hinzugefügt.
+        /// </summary>
         private async void loadMoreBtn_Click(Object sender, EventArgs e)
         {
             Button loadMoreBtn = sender as Button;

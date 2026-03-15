@@ -23,7 +23,9 @@ namespace socialMediaServer
         {
             nutzer = new List<Nutzer>();
         }
-
+        /// <summary>
+        /// Erstellt einen neuen Beitrag in der Datenbank, sowie alle beigefügten Bilderdateinamen
+        /// </summary>
         public void ErstelleBeitrag(Nutzer nutzer, string titel, string text, List<string> bilder, string tag)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -47,6 +49,10 @@ namespace socialMediaServer
                 }
             }
         }
+        /// <summary>
+        /// Registriert einen neuen Nutzer mit Benutzername, E-Mail und Passwort
+        /// Dabei wird das Passwort mit einem Salt gehashed.
+        /// </summary>
         public int Registrieren(string name, string passwort, string email)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -78,6 +84,9 @@ namespace socialMediaServer
                 return 0;
             }
         }
+        /// <summary>
+        /// Überprüft ob die eingegeben Daten zu einem Nutzer passen, gibt den Nutzer zurück
+        /// </summary>
         public Nutzer Anmelden(string name, string passwort)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -111,6 +120,9 @@ namespace socialMediaServer
                 return n;
             }
         }
+        /// <summary>
+        /// Generiert ein 12 Zeichen langes Passwort mit einem Großbuchstaben, einer Zahl und einem Sonderzeichen.
+        /// </summary>
         public char[] GenerierePasswort()
         {
             Random rand = new Random();
@@ -135,6 +147,9 @@ namespace socialMediaServer
             return passwort;
         }
 
+        /// <summary>
+        /// Updated das Passwort für den Benutzer über die entsprechende E-Mail-Adresse
+        /// </summary>
         public bool passwortWechseln(string pass, string email) 
         {
             string hashedPass = HashPasswort(pass);
@@ -169,6 +184,9 @@ namespace socialMediaServer
             }
         }
 
+        /// <summary>
+        /// Entnimmt 10 neuere Beiträge als der User, fügt ältere Beiträge hinzu, wenn es noch Lücken gibt
+        /// </summary>
         public List<Beitrag> ErmittleNeueBeitraege(Nutzer n, int offset = 0)
         {
             List<Beitrag> beitraege = new List<Beitrag>();
@@ -224,6 +242,9 @@ namespace socialMediaServer
             }
         }
 
+        /// <summary>
+        /// Holt 10 neue Beiträgen von Nutzer die der Nutzer abonniert hat.
+        /// </summary>
         public List<Beitrag> BeitraegeVonAbosHolen(Nutzer n, int offset = 0) 
         {
             List<Beitrag> beitraege = new List<Beitrag>();
@@ -280,7 +301,9 @@ namespace socialMediaServer
                 return beitraege;
             }
         }
-
+        /// <summary>
+        /// Holt 10 Beiträge mit den meisten Likes
+        /// </summary>
         public List<Beitrag> HoleBeliebtesteBeitraege(int offset) 
         {
             List<Beitrag> beitraege = new List<Beitrag>();
@@ -307,7 +330,10 @@ namespace socialMediaServer
             }
             return beitraege;
         }
-
+        /// <summary>
+        /// Lädt Beiträge die der Nutzer geliked hat.
+        /// Dies wird genutzt für die Empfehlung
+        /// </summary>
         public List<Beitrag> HoleLikedBeitraege(Nutzer n)
         {
             List<Beitrag> beitraege = new List<Beitrag>();
@@ -366,7 +392,9 @@ namespace socialMediaServer
             }
             return beitraege;
         }
-
+        /// <summary>
+        /// Lädt 10 Beiträge die der Nutzer selbst erstellt hat
+        /// </summary>
         public List<Beitrag> HoleNutzerBeitraege(int nutzerId, int offset = 0)
         {
             List<Beitrag> beitraege = new List<Beitrag>();
@@ -396,6 +424,9 @@ namespace socialMediaServer
             }
             return beitraege;
         }
+        /// <summary>
+        /// Helfer Methode, die die Werte überdem Reader auslist und einen Beitrag zurückgibt
+        /// </summary>
         private Beitrag LeseBeitrag(MySqlDataReader reader)
         {
             int beitragId = reader.GetInt32("beitragid");
@@ -421,6 +452,9 @@ namespace socialMediaServer
             return b;
         }
 
+        /// <summary>
+        /// Holt alle Bilddateinamen von einem Beitrag
+        /// </summary>
         public List<Bild> HoleBilder(int beitragId)
         {
             List<Bild> bilder = new List<Bild>();
@@ -440,6 +474,9 @@ namespace socialMediaServer
             }
         }
 
+        /// <summary>
+        /// Ändert das Passwort vom Nutzer wenn das alte Passwort korrekt eingegeben wurde
+        /// </summary>
         public int ChangePassword(string oldPassword, string newPassword, int nutzerId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -474,6 +511,9 @@ namespace socialMediaServer
             }
             return result;
         }
+        /// <summary>
+        /// Sucht einen Nutzer nach deren BenutzerId und gibt ihn als Objekt zurück
+        /// </summary>
         public Nutzer SucheNutzer(int nutzerId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -503,7 +543,9 @@ namespace socialMediaServer
                 return n;
             }
         }
-
+        /// <summary>
+        /// Sucht für Nutzer die mit dem Suchbegriff übereinstimmen
+        /// </summary>
         public List<Nutzer> SucheNutzer(string suchBegriff)
         {
             List<Nutzer> nutzer = new List<Nutzer>();
@@ -533,7 +575,9 @@ namespace socialMediaServer
                 return nutzer;
             }
         }
-
+        /// <summary>
+        /// Updated die Benutzerinformationen in der Datenbank
+        /// </summary>
         public void AktualisiereProfil(int nutzerId, string name, string email)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -550,7 +594,9 @@ namespace socialMediaServer
                 conn.Close();
             }
         }
-
+        /// <summary>
+        /// Updated das Profilbild vom Nutzer in der Datenbank
+        /// </summary>
         public void AktualisiereProfilBild(int nutzerId, string filename)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -566,7 +612,9 @@ namespace socialMediaServer
                 conn.Close();
             }
         }
-
+        /// <summary>
+        /// Holt die Bilderdateinamen von einem Beitrag
+        /// </summary>
         public List<string> HoleOriginalBilder(int beitragId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -588,6 +636,10 @@ namespace socialMediaServer
                 return bilder;
             }
         }
+        /// <summary>
+        /// Überprüft ob der Benutzer bereits den Abonnent abonniert hat,
+        /// andernfalls wird der Nutzer abonniert
+        /// </summary>
         public int Abonnieren(int nutzerId, int abonnentId)
         {
             if (nutzerId == abonnentId)
@@ -618,6 +670,9 @@ namespace socialMediaServer
                 return 0;
             }
         }
+        /// <summary>
+        /// Ermittelt die Abonnentenanzahl von einem Nutzer anhand der Id
+        /// </summary>
         public int ErmittelAbonnentenAnzahl(int nutzerId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -633,6 +688,11 @@ namespace socialMediaServer
                 return abonnenten;
             }
         }
+        /// <summary>
+        /// Überprüft zunächst, ob der Nutzer bereits diese Beitrag geliked hat.
+        /// Danach wird überprüft ob der Beitrag den Nutzer gehört.
+        /// Danach wird der Beitrag geliked.
+        /// </summary>
         public int Like(int beitragId, int nutzerId)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -664,7 +724,9 @@ namespace socialMediaServer
                 return 0;
             }
         }
-
+        /// <summary>
+        /// Speichert Kommentarwerte in der Datenbank
+        /// </summary>
         public int ErstelleKommentar(int beitragsId, int nutzerId, string text, int? oberKommentar)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -685,7 +747,9 @@ namespace socialMediaServer
                 return 0;
             }
         }
-        
+        /// <summary>
+        /// Lädt 10 Kommentare von einem Beitrag
+        /// </summary>
         public List<Kommentar> LadeKommentare(int beitragId)
         {
             List<Kommentar> comments = new List<Kommentar>();
@@ -731,7 +795,11 @@ namespace socialMediaServer
                 return comments;
             }
         }
-
+        /// <summary>
+        /// Überprüft ob bereits ein Chat zwischen zwei Nutzern existiert.
+        /// Wenn ein Chat existiert wird diese chatId zurückgegeben. 
+        /// Wenn nicht dann wird 0 zurückgegeben
+        /// </summary>
         public int ChatDoesNotExist(int nutzer1, int nutzer2)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -753,7 +821,10 @@ namespace socialMediaServer
                 return 0;
             }
         }
-
+        /// <summary>
+        /// Erstellt ein Chat wenn noch kein Chat existiert.
+        /// Beim erstellen eines Chats, werden die zwei Nutzer noch eine Referenz zum Chat hinterlassen
+        /// </summary>
         public int ChatErstellen(int nutzer1, int nutzer2)
         {
             int value = ChatDoesNotExist(nutzer1, nutzer2);
@@ -782,7 +853,9 @@ namespace socialMediaServer
                 return chatId;
             }
         }
-
+        /// <summary>
+        /// Speichert die Nachricht in die Datenbank zum jeweilligen Chat
+        /// </summary>
         public void SendeNachricht(int chatId, int sender, string text)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -798,7 +871,11 @@ namespace socialMediaServer
                 conn.Close();
             }
         }
-
+        /// <summary>
+        /// Lädt alle Chats, wo der Nutzer eine Referenz hat.
+        /// Für jedem Chat wird der andere Teilnehmer die Id, das ProfilBild und sein Benutzername mitentnommen
+        /// Zudem wird die im chat älteste Nachricht ausgegeben.
+        /// </summary>
         public List<Chat> LadeChats(int nutzerId)
         {
             List<Chat> chats = new List<Chat>();
@@ -817,8 +894,7 @@ namespace socialMediaServer
                     WHERE chatId = c.chatId
                 )
                 WHERE t.nutzerId = @n
-                ORDER BY na.gesendetAm DESC
-                LIMIT 10", conn);
+                ORDER BY na.gesendetAm DESC", conn);
                 get.Parameters.AddWithValue("@n", nutzerId);
                 using (MySqlDataReader reader = get.ExecuteReader())
                 {
@@ -854,7 +930,12 @@ namespace socialMediaServer
                 return chats;
             }
         }
-
+        /// <summary>
+        /// Lädt die letzten 10 neusten Nachrichten aus einem Chat
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         public List<Nachricht> LadeNachricht(int chatId, int offset)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -891,37 +972,45 @@ namespace socialMediaServer
                 return nachrichten;
             }
         }
-
+        /// <summary>
+        /// Schneidet ein Bild aus, dass es ein Quadrat wird.
+        /// Es wird den mittleren Bereich des Bildes verwendet.
+        /// </summary>
         public static Image CropToSquare(Image img)
         {
-            int size = Math.Min(img.Width, img.Height);
+            int size = Math.Min(img.Width, img.Height);  // kleinere Seite auswählen
             int x = (img.Width - size) / 2;
             int y = (img.Height - size) / 2;
 
-            Rectangle cropArea = new Rectangle(x, y, size, size);
+            Rectangle cropArea = new Rectangle(x, y, size, size); // Bereich der ausgeschnitten werden soll
 
-            Bitmap bmp = new Bitmap(size, size);
+            Bitmap bmp = new Bitmap(size, size); // Neue Bitmap mit der Zielgröße
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 g.DrawImage(img, new Rectangle(0, 0, size, size), cropArea, GraphicsUnit.Pixel);
             }
             return bmp;
         }
-
+        /// <summary>
+        /// Skaliert ein Bild auf eine feste Größe
+        /// </summary>
         public static Image ResizeImage(Image img, int size = 512)
         {
             Bitmap resized = new Bitmap(size, size);
             using (Graphics g = Graphics.FromImage(resized))
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic; // Hochwertigere Interpolation für bessere Bildqualität
                 g.DrawImage(img, 0, 0, size, size);
             }
             return resized;
         }
+        /// <summary>
+        /// Überprüft ob ein eingegebenes Passwort mit dem gespeicherten Hash übereinstimmt.
+        /// </summary>
         private bool VeriryPasswort(string enteredPass, string savedPass)
         {
             byte[] hashBytes = Convert.FromBase64String(savedPass);
-            byte[] salt = new byte[16];
+            byte[] salt = new byte[16]; // Ersten 16 Bytes enthalten den Salt
             Buffer.BlockCopy(hashBytes, 0, salt, 0, 16);
 
             byte[] passwortBytes = Encoding.UTF8.GetBytes(enteredPass);
@@ -930,12 +1019,12 @@ namespace socialMediaServer
             Buffer.BlockCopy(passwortBytes, 0, saltedPasswort, 0, passwortBytes.Length);
             Buffer.BlockCopy(salt, 0, saltedPasswort, passwortBytes.Length, salt.Length);
 
-            using (SHA256Managed sha256 = new SHA256Managed())
+            using (SHA256Managed sha256 = new SHA256Managed()) // Hash des eingegebenen Passworts berechnen
             {
-                byte[] neuerHash = sha256.ComputeHash(saltedPasswort);
+                byte[] neuerHash = sha256.ComputeHash(saltedPasswort); 
                 for (int i = 0; i < neuerHash.Length; i++)
                 {
-                    if (hashBytes[i + 16] != neuerHash[i])
+                    if (hashBytes[i + 16] != neuerHash[i]) // Für jedes byte überprüfen, ob es gleicht ist
                     {
                         return false;
                     } 
@@ -943,7 +1032,10 @@ namespace socialMediaServer
             }
             return true;
         }
-
+        /// <summary>
+        /// Hashed ein eingegebenes Passwort
+        /// Es wirt ein zufälliges 16 byte großer Salt generiert und mit gespeichert
+        /// </summary>
         private string HashPasswort(string passwort)
         {
             byte[] salt = GenerateSalt();
@@ -964,6 +1056,9 @@ namespace socialMediaServer
                 return Convert.ToBase64String(hashedPasswordWithSalt);
             }
         }
+        /// <summary>
+        /// Erstellt ein zufälliges Salt für das Passwort
+        /// </summary>
         private byte[] GenerateSalt()
         {
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
