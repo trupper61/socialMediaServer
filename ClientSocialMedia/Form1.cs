@@ -331,6 +331,7 @@ namespace ClientSocialMedia
                 inhalt.Beitrag.SetKommentare(inhalt.ladekomm());
                 inhalt.Autor = inhalt.GetUserData();
                 inhalt.setDaten(inhalt.pictures);
+                inhalt.ladeVorschau();
                 inhalt.OnChatClicked += ShowChatOverview;
             }
             inhaltAnzeige.Controls.Remove(loadMoreBtn);
