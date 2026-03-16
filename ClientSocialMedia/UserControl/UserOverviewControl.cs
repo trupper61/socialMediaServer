@@ -48,6 +48,7 @@ namespace ClientSocialMedia
             {
                 nutzerPb.Image = Image.FromStream(ms);
             }
+            SetToolTip();
         }
         /// <summary>
         /// Nimmt die Daten vom Nutzer und zeigt diese an
@@ -63,6 +64,7 @@ namespace ClientSocialMedia
             {
                 nutzerPb.Image = Image.FromStream(ms);
             }
+            SetToolTip();
         }
         /// <summary>
         /// Abonniert bei Klick den Nutzer, speichert das auf dem Server und lädt den neuen Nutzer.
@@ -77,6 +79,12 @@ namespace ClientSocialMedia
             string[] parts = reply.Split(';');
             if (parts[0] == "-")
                 MessageBox.Show(parts[1]);
+        }
+
+        private void SetToolTip()
+        {
+            ToolTip nutzerName = new ToolTip();
+            nutzerName.SetToolTip(nameLb, nameLb.Text);
         }
 
         private void closeBtn_Click(object sender, EventArgs e)

@@ -47,6 +47,7 @@ namespace ClientSocialMedia
             {
                 c.Click += ChatItem_Click;
             }
+            SetToolTip();
         }
         /// <summary>
         /// Ausgelöstes Event, wenn man einen Chat anklickt. Daraufhin wird ein weiters Event ausgelöst welches die jeweilige Chat-Id weitergibt.
@@ -69,6 +70,12 @@ namespace ClientSocialMedia
             Cursor = Cursors.Default;
             this.BackColor = Color.White;
             this.BorderStyle = BorderStyle.None;
+        }
+
+        private void SetToolTip()
+        {
+            ToolTip name = new ToolTip();
+            name.SetToolTip(nameLb, nameLb.Text);
         }
     }
 }

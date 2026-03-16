@@ -39,11 +39,12 @@
             // 
             // nameLb
             // 
-            this.nameLb.AutoSize = true;
+            this.nameLb.AutoEllipsis = true;
             this.nameLb.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLb.Location = new System.Drawing.Point(23, 62);
+            this.nameLb.MaximumSize = new System.Drawing.Size(161, 24);
             this.nameLb.Name = "nameLb";
-            this.nameLb.Size = new System.Drawing.Size(145, 24);
+            this.nameLb.Size = new System.Drawing.Size(161, 24);
             this.nameLb.TabIndex = 2;
             this.nameLb.Text = "Benutzername";
             // 

@@ -49,6 +49,14 @@ namespace ClientSocialMedia
             }
             setDaten(pictures);
         }
+
+        private void SetToolTipps()
+        {
+            ToolTip name = new ToolTip();
+            name.SetToolTip(nutzerNameLb, nutzerNameLb.Text);
+            ToolTip titel = new ToolTip();
+            titel.SetToolTip(beitragTitel, beitragTitel.Text);
+        }
         //Alle Daten werden für die Existenz des Beitrags festgelegt.
         public void setDaten(List<string> bilder) 
         {
@@ -78,6 +86,7 @@ namespace ClientSocialMedia
                     profilePicPb.Image = img;
                 }
             }
+            SetToolTipps();
         }
 
         public Nutzer GetUserData()

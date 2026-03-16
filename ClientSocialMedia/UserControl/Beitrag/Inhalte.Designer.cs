@@ -48,13 +48,15 @@
             // 
             // beitragTitel
             // 
-            this.beitragTitel.AutoSize = true;
+            this.beitragTitel.AutoEllipsis = true;
             this.beitragTitel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.beitragTitel.Location = new System.Drawing.Point(203, 2);
+            this.beitragTitel.Location = new System.Drawing.Point(0, 2);
+            this.beitragTitel.MaximumSize = new System.Drawing.Size(436, 25);
             this.beitragTitel.Name = "beitragTitel";
-            this.beitragTitel.Size = new System.Drawing.Size(53, 25);
+            this.beitragTitel.Size = new System.Drawing.Size(436, 25);
             this.beitragTitel.TabIndex = 0;
             this.beitragTitel.Text = "Titel";
+            this.beitragTitel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // next
             // 
@@ -163,11 +165,12 @@
             // 
             // nutzerNameLb
             // 
-            this.nutzerNameLb.AutoSize = true;
+            this.nutzerNameLb.AutoEllipsis = true;
             this.nutzerNameLb.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nutzerNameLb.Location = new System.Drawing.Point(72, 241);
+            this.nutzerNameLb.MaximumSize = new System.Drawing.Size(180, 20);
             this.nutzerNameLb.Name = "nutzerNameLb";
-            this.nutzerNameLb.Size = new System.Drawing.Size(99, 18);
+            this.nutzerNameLb.Size = new System.Drawing.Size(180, 18);
             this.nutzerNameLb.TabIndex = 11;
             this.nutzerNameLb.Text = "Nutzername";
             // 

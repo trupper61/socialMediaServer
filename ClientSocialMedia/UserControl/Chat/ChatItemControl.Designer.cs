@@ -48,11 +48,12 @@
             // 
             // nameLb
             // 
-            this.nameLb.AutoSize = true;
+            this.nameLb.AutoEllipsis = true;
             this.nameLb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLb.Location = new System.Drawing.Point(49, 3);
+            this.nameLb.MaximumSize = new System.Drawing.Size(159, 20);
             this.nameLb.Name = "nameLb";
-            this.nameLb.Size = new System.Drawing.Size(128, 20);
+            this.nameLb.Size = new System.Drawing.Size(159, 20);
             this.nameLb.TabIndex = 1;
             this.nameLb.Text = "BenutzerName";
             this.nameLb.MouseLeave += new System.EventHandler(this.ChatItem_MouseLeave);
