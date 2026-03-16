@@ -396,6 +396,7 @@ namespace ClientSocialMedia
                     panel.Hide();
                     profilePic.Visible = true;
                     this.Controls.Remove(logo);
+                    menuPanel.BringToFront();
                     zeigeProgram();
                 }
                 else
