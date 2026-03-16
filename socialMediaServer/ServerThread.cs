@@ -70,7 +70,7 @@ namespace socialMediaServer
                                 client.Write("+;registrierungerfolg\n");
                             break;
                         case "abmelden":
-                            client.Write($"Bis zum nächsten Mal {ConvertMessage(this.nutzer.BenutzerName)}!\n");
+                            client.Write($"Bis zum nächsten Man {this.nutzer.BenutzerName}!\n");
                             this.nutzer = null;
                             break;
                         case "beitrag":

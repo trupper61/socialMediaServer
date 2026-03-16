@@ -482,6 +482,7 @@ namespace ClientSocialMedia
                 beitragsErstellungsPanel.Visible = false;
                 return;
             }
+            textVerfassung.Text = "";
             beitragsErstellungsPanel.Controls.Clear();
             beitragsErstellungsPanel.Controls.Add(this.tagPick);
             beitragsErstellungsPanel.Controls.Add(this.tagLabel);
