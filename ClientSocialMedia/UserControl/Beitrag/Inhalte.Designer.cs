@@ -150,6 +150,8 @@
             this.beitragBild.TabIndex = 1;
             this.beitragBild.TabStop = false;
             this.beitragBild.Click += new System.EventHandler(this.beitragBild_Click);
+            this.beitragBild.MouseLeave += new System.EventHandler(this.beitragBild_MouseLeave);
+            this.beitragBild.MouseHover += new System.EventHandler(this.beitragBild_MouseHover);
             // 
             // profilePicPb
             // 

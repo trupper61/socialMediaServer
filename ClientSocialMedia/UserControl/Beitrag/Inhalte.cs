@@ -235,5 +235,15 @@ namespace ClientSocialMedia
             form.Controls.Add(viewer);
             viewer.BringToFront();
         }
+
+        private void beitragBild_MouseHover(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Hand;
+        }
+
+        private void beitragBild_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Default;
+        }
     }
 }
