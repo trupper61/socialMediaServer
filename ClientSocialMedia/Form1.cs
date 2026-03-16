@@ -492,7 +492,6 @@ namespace ClientSocialMedia
         //Logik für das Erstellen eines Beitrags für den Nutzer. 
         private void erstellen_Click(object sender, EventArgs e)
         {
-            Form1.laedGerade = true;
             if (beitragsErstellungsPanel.Visible)
             {
                 beitragsErstellungsPanel.Visible = false;
@@ -555,7 +554,6 @@ namespace ClientSocialMedia
             tagPick.BringToFront();
             beitragsErstellungsPanel.Controls.Add(tagPick);
             beitragErstellen.Click += beitragErstellen_Click;
-            Form1.laedGerade = false;
         }
         //Logik für das Senden des erstellten Beitrags an den Server.
         private void beitragErstellen_Click(object sender, EventArgs e) 
@@ -566,6 +564,11 @@ namespace ClientSocialMedia
                 return;
             }
             tagPick.Visible = false;
+            if (bilder.Count == 0)
+            {
+                MessageBox.Show("Bilder müssen hinzugefügt werden!");
+                return;
+            }
             client.beitragSenden(titelEingabe.Text, bilder, tagPick.Text, this.textVerfassung.Text);
             if (connectionLost)
                 return;
