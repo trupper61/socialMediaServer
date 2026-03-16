@@ -76,6 +76,7 @@
             // 
             this.mailTb.Location = new System.Drawing.Point(199, 157);
             this.mailTb.Name = "mailTb";
+            this.mailTb.ReadOnly = true;
             this.mailTb.Size = new System.Drawing.Size(159, 20);
             this.mailTb.TabIndex = 2;
             this.mailTb.Text = "E-Mail...";
@@ -213,7 +214,7 @@
             // abmeldenBtn
             // 
             this.abmeldenBtn.Location = new System.Drawing.Point(199, 18);
-            this.abmeldenBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.abmeldenBtn.Margin = new System.Windows.Forms.Padding(2);
             this.abmeldenBtn.Name = "abmeldenBtn";
             this.abmeldenBtn.Size = new System.Drawing.Size(86, 23);
             this.abmeldenBtn.TabIndex = 15;
@@ -237,7 +238,7 @@
             this.headerPanel.Controls.Add(this.abmeldenBtn);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
-            this.headerPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.headerPanel.Margin = new System.Windows.Forms.Padding(2);
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(400, 350);
             this.headerPanel.TabIndex = 17;
@@ -245,7 +246,7 @@
             // loadBeitraegeBtn
             // 
             this.loadBeitraegeBtn.Location = new System.Drawing.Point(278, 309);
-            this.loadBeitraegeBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loadBeitraegeBtn.Margin = new System.Windows.Forms.Padding(2);
             this.loadBeitraegeBtn.Name = "loadBeitraegeBtn";
             this.loadBeitraegeBtn.Size = new System.Drawing.Size(100, 27);
             this.loadBeitraegeBtn.TabIndex = 0;
@@ -259,7 +260,7 @@
             this.beitraegePanel.AutoScroll = true;
             this.beitraegePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.beitraegePanel.Location = new System.Drawing.Point(0, 350);
-            this.beitraegePanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.beitraegePanel.Margin = new System.Windows.Forms.Padding(2);
             this.beitraegePanel.Name = "beitraegePanel";
             this.beitraegePanel.Size = new System.Drawing.Size(402, 48);
             this.beitraegePanel.TabIndex = 18;
