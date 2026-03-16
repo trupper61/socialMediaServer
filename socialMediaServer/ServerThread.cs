@@ -672,7 +672,7 @@ namespace socialMediaServer
             foreach(Beitrag b in beitraege) 
             {
                 int gewichtung = 0;
-                gewichtung += b.gebeAnzahlLikes();
+                gewichtung += b.gebeAnzahlLikes() * 10;
 
                 //Je nach platzierung in dem Tag-Ranking werden Gewichtungen zugewiesen.
                 if(b.Tag == beliebt[0])
