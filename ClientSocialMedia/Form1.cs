@@ -373,14 +373,20 @@ namespace ClientSocialMedia
             if(!registerToggle) 
             {
                 string antwort = client.anmelden(tbNutzername.Text, tbPasswort.Text);
+                string[] parts = antwort.Split(';');
                 if (connectionLost)
                     return;
-                if (antwort.Contains("+")) 
+                if (parts[0] == "+") 
                 {
                     panel.Hide();
                     profilePic.Visible = true;
                     this.Controls.Remove(logo);
                     zeigeProgram();
+                }
+                else
+                {
+                    MessageBox.Show(parts[1]);
+                    return;
                 }
             }
             if(registerToggle) 
@@ -453,7 +459,14 @@ namespace ClientSocialMedia
                 MessageBox.Show("Die E-Mail muss eine gültige E-Mail sein");
                 return;
             }
-            client.registrieren(tbNutzername.Text, tbPasswort.Text, email.Text);
+            string reply = client.registrieren(tbNutzername.Text, tbPasswort.Text, email.Text);
+            if (Form1.connectionLost)
+                return;
+            string[] parts = reply.Split(';');
+            if (parts[0] == "-")
+            {
+                MessageBox.Show(parts[1]);
+            }
         }
 
         private void bildauswaehlen_OnClick(object sender, EventArgs e) 

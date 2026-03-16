@@ -155,9 +155,10 @@ namespace ClientSocialMedia
             if (Form1.connectionLost)
                 return;
             string[] parts = reply.Split(';');
-            MessageBox.Show(parts[1]);
             if (parts[0] == "+")
                 likesLb.Text = $"Anzahl Likes: {this.beitrag.gebeAnzahlLikes() + 1}";
+            else
+                MessageBox.Show(parts[1]);
         }
 
         private void anzeigen_Click(object sender, EventArgs e)

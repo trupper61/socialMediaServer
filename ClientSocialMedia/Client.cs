@@ -66,14 +66,14 @@ namespace ClientSocialMedia
             return msg;
         }
 
-        public void registrieren(string benutzername, string passwort, string email) 
+        public string registrieren(string benutzername, string passwort, string email) 
         {
             string eingabe = $"{ConvertMessage(benutzername)};{ConvertMessage(passwort)};{ConvertMessage(email)}";
             if (!Write("registrieren;" + eingabe + '\n'))
-                return;
+                return null;
 
             string msg = ReadLine();
-            if (msg == null) return;
+            return msg;
         }
         /// <summary>
         /// Opens a dialog lets the user select pictures and encodes them to base64 (bytes just as strings) 
