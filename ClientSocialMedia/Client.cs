@@ -26,7 +26,7 @@ namespace ClientSocialMedia
         private string benutzername;
         public Action<Beitrag> OnBeitragErhalten;
         public Action OnConnectionLost;
-        private string hostname = "91.63.107.81";
+        private string hostname = "127.0.0.1";
         private int port = 5555;
         public Client()
         {

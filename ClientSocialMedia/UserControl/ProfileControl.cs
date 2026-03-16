@@ -173,7 +173,7 @@ namespace ClientSocialMedia
         /// <param name="e"></param>
         private async void loadBeitraegeBtn_Click(object sender, EventArgs e)
         {
-
+            loadBeitraegeBtn.Visible = false;
             beitragOffset = 0;
             Cursor = Cursors.WaitCursor;
             beitraege = await Task.Run(() => Form1.client.HoleNutzerBeitraege(beitragOffset));

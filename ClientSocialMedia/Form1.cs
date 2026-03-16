@@ -289,6 +289,7 @@ namespace ClientSocialMedia
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
                 i.ladeVorschau();
+                i.OnChatClicked += ShowChatOverview;
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "neue";
@@ -330,6 +331,7 @@ namespace ClientSocialMedia
                 inhalt.Beitrag.SetKommentare(inhalt.ladekomm());
                 inhalt.Autor = inhalt.GetUserData();
                 inhalt.setDaten(inhalt.pictures);
+                inhalt.OnChatClicked += ShowChatOverview;
             }
             inhaltAnzeige.Controls.Remove(loadMoreBtn);
             inhaltAnzeige.Controls.Add(loadMoreBtn);
@@ -613,6 +615,7 @@ namespace ClientSocialMedia
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
                 i.ladeVorschau();
+                i.OnChatClicked += ShowChatOverview;
             }
             beitragOffset += beitraege.Count;
             loadMoreBtn.Tag = "beliebt";
@@ -620,6 +623,11 @@ namespace ClientSocialMedia
             laedGerade = false;
         }
 
+        private void ShowChatOverview(ChatOverviewControl coc)
+        {
+            inhaltAnzeige.Controls.Clear();
+            inhaltAnzeige.Controls.Add(coc);
+        }
         private async void buttonNurAbos_Click(object sender, EventArgs e) 
         {
             laedGerade = true;
@@ -637,6 +645,7 @@ namespace ClientSocialMedia
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
                 i.ladeVorschau();
+                i.OnChatClicked += ShowChatOverview;
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "abos";
@@ -662,6 +671,7 @@ namespace ClientSocialMedia
                 i.Autor = i.GetUserData();
                 i.setDaten(i.pictures);
                 i.ladeVorschau();
+                i.OnChatClicked += ShowChatOverview;
             }
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "empfehlung";

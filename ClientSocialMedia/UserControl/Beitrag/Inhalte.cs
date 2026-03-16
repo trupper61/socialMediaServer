@@ -25,6 +25,7 @@ namespace ClientSocialMedia
         public Beitrag Beitrag { get => beitrag; set => beitrag = value; }
         public Nutzer Autor { get; set; }
         Kommentaruebersicht ku;
+        public Action<ChatOverviewControl> OnChatClicked;
         public Inhalte(Beitrag beitrag)
         {
             InitializeComponent();
@@ -202,8 +203,11 @@ namespace ClientSocialMedia
 
         private void ShowChat(ChatOverviewControl coc)
         {
-            this.Controls.Clear();
-            this.Controls.Add(coc);
+
+            ////this.Controls.Clear();
+            //this.Parent.Controls.Clear();
+            //this.Parent.Controls.Add(coc);
+            OnChatClicked?.Invoke(coc);
         }
         private void profilePicPb_MouseHover(object sender, EventArgs e)
         {
