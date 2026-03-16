@@ -351,11 +351,15 @@ namespace ClientSocialMedia
             inhaltAnzeige.Controls.Remove(loadMoreBtn);
             inhaltAnzeige.Controls.Add(loadMoreBtn);
             beitragOffset += neue.Count;
-            loadMoreBtn.Text = "Weitere Beiträge laden";
+            
             loadMoreBtn.Enabled = true;
             if (neue.Count == 0)
             {
                 loadMoreBtn.Text = "Keine weiteren Beiträge vorhanden";
+            }
+            else
+            {
+                loadMoreBtn.Text = "Weitere Beiträge laden";
             }
             Form1.laedGerade = false;
             EnableButtons();
@@ -663,9 +667,10 @@ namespace ClientSocialMedia
                 return;
             Form1.laedGerade = true;
             DisableButtons();
+            beitragOffset = 0;
             inhaltAnzeige.Controls.Clear();
             beitraege = await Task.Run(() => client.beitraegeAnfragen(true, false, false, beitragOffset));
-            if (beitraege == null)
+            if (beitraege.Count == 0)
             {
                 return;
             }
