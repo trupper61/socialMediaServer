@@ -160,6 +160,8 @@ namespace ClientSocialMedia
 
         private void likeBtn_Click(object sender, EventArgs e)
         {
+            if (Form1.laedGerade)
+                return;
             string reply = Form1.client.Like(beitragId);
             if (Form1.connectionLost)
                 return;
@@ -203,6 +205,8 @@ namespace ClientSocialMedia
 
         private async void profilePicPb_Click(object sender, EventArgs e)
         {
+            if (Form1.laedGerade)
+                return;
             UserOverviewControl userOverview = new UserOverviewControl();
             userOverview.Location = new Point((this.Parent.Parent.Width - userOverview.Width) / 2, (this.Parent.Parent.Height - userOverview.Height) / 2);
             this.Parent.Parent.Controls.Add(userOverview);
@@ -213,10 +217,6 @@ namespace ClientSocialMedia
 
         private void ShowChat(ChatOverviewControl coc)
         {
-
-            ////this.Controls.Clear();
-            //this.Parent.Controls.Clear();
-            //this.Parent.Controls.Add(coc);
             OnChatClicked?.Invoke(coc);
         }
         private void profilePicPb_MouseHover(object sender, EventArgs e)
@@ -228,6 +228,8 @@ namespace ClientSocialMedia
 
         private void beitragBild_Click(object sender, EventArgs e)
         {
+            if (Form1.laedGerade)
+                return;
             List<Image> images = Form1.client.HoleOriginalBilder(beitragId);
             ImageViewerControl viewer = new ImageViewerControl(images, scrollIndex);
             Form form = this.FindForm();

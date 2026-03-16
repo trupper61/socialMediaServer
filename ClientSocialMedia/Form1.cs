@@ -31,7 +31,7 @@ namespace ClientSocialMedia
         private Button loadMoreBtn = new Button();
         public static Client client = new Client();
         private int beitragOffset = 0;
-        private bool laedGerade = false;
+        public static bool laedGerade = false;
         public static bool connectionLost = false;
 
         public Form1()
@@ -253,12 +253,17 @@ namespace ClientSocialMedia
             }
             zeigeInhalte();
         }
-
+        private void DisableButtons()
+        {
+            menuPanel.Enabled = false;
+        }
+        private void EnableButtons()
+        {
+            menuPanel.Enabled = true;
+        }
         private void buttonBeitraege_Click(object sender, EventArgs e)
         {
-            laedGerade = true;
             zeigeInhalte();
-            laedGerade = false;
         }
 
         private void zeigeInhalte() 
@@ -274,9 +279,13 @@ namespace ClientSocialMedia
         //Wird nach anmeldung ausgeführt. Die Anzeige aller neusten Beiträge ist Standard.
         private async void EmpfangeDaten() 
         {
+            if (Form1.laedGerade)
+                return;
             beitragOffset = 0;
             inhaltAnzeige.Controls.Clear();
-            beitraege = await Task.Run(() => client.beitraegeAnfragen(false, false, false, beitragOffset));
+            Form1.laedGerade = true;
+            DisableButtons();
+        beitraege = await Task.Run(() => client.beitraegeAnfragen(false, false, false, beitragOffset));
             if(beitraege == null || connectionLost) 
             {
                 return;
@@ -294,6 +303,8 @@ namespace ClientSocialMedia
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "neue";
             inhaltAnzeige.Controls.Add(loadMoreBtn);
+            Form1.laedGerade = false;
+            EnableButtons();
         }
 
         private async void BeitragErhalten(Beitrag b)
@@ -312,7 +323,10 @@ namespace ClientSocialMedia
         }
         private async void LoadMoreBtn_Click(object sender, EventArgs e)
         {
-            laedGerade = true;
+            if (Form1.laedGerade)
+                return;
+            Form1.laedGerade = true;
+            DisableButtons();
             loadMoreBtn.Enabled = false;
             loadMoreBtn.Text = "Lade...";
             List<Beitrag> neue = new List<Beitrag>();
@@ -342,12 +356,8 @@ namespace ClientSocialMedia
             {
                 loadMoreBtn.Text = "Keine weiteren Beiträge vorhanden";
             }
-            laedGerade = false;
-        }
-
-        private void refresh() 
-        {
-            
+            Form1.laedGerade = false;
+            EnableButtons();
         }
         private void tbNutzername_Click(object sender, EventArgs e) 
         {
@@ -476,7 +486,7 @@ namespace ClientSocialMedia
         //Logik für das Erstellen eines Beitrags für den Nutzer. 
         private void erstellen_Click(object sender, EventArgs e)
         {
-            laedGerade = true;
+            Form1.laedGerade = true;
             if (beitragsErstellungsPanel.Visible)
             {
                 beitragsErstellungsPanel.Visible = false;
@@ -539,7 +549,7 @@ namespace ClientSocialMedia
             tagPick.BringToFront();
             beitragsErstellungsPanel.Controls.Add(tagPick);
             beitragErstellen.Click += beitragErstellen_Click;
-            laedGerade = false;
+            Form1.laedGerade = false;
         }
         //Logik für das Senden des erstellten Beitrags an den Server.
         private void beitragErstellen_Click(object sender, EventArgs e) 
@@ -554,9 +564,7 @@ namespace ClientSocialMedia
             if (connectionLost)
                 return;
             beitragsErstellungsPanel.Visible = false;
-            laedGerade = true;
             EmpfangeDaten();
-            laedGerade = false;
         }
         
         public void Abmelden()
@@ -574,6 +582,8 @@ namespace ClientSocialMedia
 
         private void profilePic_Click(object sender, EventArgs e)
         {
+            if (Form1.laedGerade)
+                return;
             inhaltAnzeige.Controls.Clear();
             ProfileControl profil = new ProfileControl();
             profil.OnProfileChange = (img) =>
@@ -611,7 +621,10 @@ namespace ClientSocialMedia
 
         private async void buttonBeliebt_Click(object sender, EventArgs e) 
         {
-            laedGerade = true;
+            if (Form1.laedGerade)
+                return;
+            Form1.laedGerade = true;
+            DisableButtons();
             beitragOffset = 0;
             inhaltAnzeige.Controls.Clear();
             beitraege = await Task.Run(() => client.beitraegeAnfragen(false, false, true, beitragOffset));
@@ -634,7 +647,8 @@ namespace ClientSocialMedia
             beitragOffset += beitraege.Count;
             loadMoreBtn.Tag = "beliebt";
             inhaltAnzeige.Controls.Add(loadMoreBtn);
-            laedGerade = false;
+            Form1.laedGerade = false;
+            EnableButtons();
         }
 
         private void ShowChatOverview(ChatOverviewControl coc)
@@ -644,7 +658,10 @@ namespace ClientSocialMedia
         }
         private async void buttonNurAbos_Click(object sender, EventArgs e) 
         {
-            laedGerade = true;
+            if (Form1.laedGerade)
+                return;
+            Form1.laedGerade = true;
+            DisableButtons();
             inhaltAnzeige.Controls.Clear();
             beitraege = await Task.Run(() => client.beitraegeAnfragen(true, false, false, beitragOffset));
             if (beitraege == null)
@@ -664,12 +681,16 @@ namespace ClientSocialMedia
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "abos";
             inhaltAnzeige.Controls.Add(loadMoreBtn);
-            laedGerade = false;
+            Form1.laedGerade = false;
+            EnableButtons();
         }
         
         private async void empfehlungen_Click(object sender, EventArgs e) 
         {
+            if (laedGerade)
+                return;
             laedGerade = true;
+            DisableButtons();
             inhaltAnzeige.Controls.Clear();
             beitragOffset = 0;
             beitraege = await Task.Run(() => client.beitraegeAnfragen(false, true, false, beitragOffset));
@@ -690,11 +711,12 @@ namespace ClientSocialMedia
             beitragOffset = beitraege.Count;
             loadMoreBtn.Tag = "empfehlung";
             inhaltAnzeige.Controls.Add(loadMoreBtn);
-            laedGerade = false;
+            Form1.laedGerade = false;
+            EnableButtons();
         }
         private void Suche_Click(object sender, EventArgs e)
         {
-            laedGerade = true;
+            Form1.laedGerade = true;
             inhaltAnzeige.Controls.Clear();
             SearchControl searchControl = new SearchControl();
             inhaltAnzeige.Controls.Add(searchControl);
@@ -703,7 +725,7 @@ namespace ClientSocialMedia
 
         private void Chat_Click(object sender, EventArgs e)
         {
-            laedGerade = true;
+            Form1.laedGerade = true;
             ChatControl cc = new ChatControl();
             cc.ChatSelected += ChatControl_ChatSelected;
             inhaltAnzeige.Controls.Clear();
