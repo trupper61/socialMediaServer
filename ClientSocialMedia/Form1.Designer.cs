@@ -162,7 +162,7 @@
             this.Controls.Add(this.menuPanel);
             this.MinimumSize = new System.Drawing.Size(815, 490);
             this.Name = "Form1";
-            this.Text = "s";
+            this.Text = "Social-Media Platform";
             this.beitragsErstellungsPanel.ResumeLayout(false);
             this.beitragsErstellungsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePic)).EndInit();
