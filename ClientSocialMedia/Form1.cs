@@ -388,9 +388,10 @@ namespace ClientSocialMedia
             if(!registerToggle) 
             {
                 string antwort = client.anmelden(tbNutzername.Text, tbPasswort.Text);
-                string[] parts = antwort.Split(';');
                 if (connectionLost)
                     return;
+                string[] parts = antwort.Split(';');
+       
                 if (parts[0] == "+") 
                 {
                     panel.Hide();
@@ -578,6 +579,8 @@ namespace ClientSocialMedia
         
         public void Abmelden()
         {
+            if (panel.Visible)
+                return;
             inhaltAnzeige.Controls.Clear();
             inhaltAnzeige.Visible = false;
             profilePic.Visible = false;
