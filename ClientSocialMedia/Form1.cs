@@ -674,10 +674,6 @@ namespace ClientSocialMedia
             beitragOffset = 0;
             inhaltAnzeige.Controls.Clear();
             beitraege = await Task.Run(() => client.beitraegeAnfragen(true, false, false, beitragOffset));
-            if (beitraege.Count == 0)
-            {
-                return;
-            }
             List<Control> controls = this.Controls.Find("Inhalte", true).ToList();
             foreach (Control c in controls)
             {
