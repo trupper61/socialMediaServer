@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2026 at 11:12 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Erstellungszeit: 17. Mrz 2026 um 11:42
+-- Server-Version: 10.4.32-MariaDB
+-- PHP-Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `smpdb`
+-- Datenbank: `smpdb`
 --
 CREATE DATABASE IF NOT EXISTS `smpdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `smpdb`;
@@ -26,7 +26,7 @@ USE `smpdb`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `abonnement`
+-- Tabellenstruktur für Tabelle `abonnement`
 --
 
 CREATE TABLE `abonnement` (
@@ -35,7 +35,7 @@ CREATE TABLE `abonnement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `abonnement`
+-- Daten für Tabelle `abonnement`
 --
 
 INSERT INTO `abonnement` (`abonnentId`, `abonnierteNutzerId`) VALUES
@@ -81,12 +81,13 @@ INSERT INTO `abonnement` (`abonnentId`, `abonnierteNutzerId`) VALUES
 (21, 12),
 (21, 22),
 (22, 1),
-(22, 15);
+(22, 15),
+(23, 15);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `beitrag`
+-- Tabellenstruktur für Tabelle `beitrag`
 --
 
 CREATE TABLE `beitrag` (
@@ -99,7 +100,7 @@ CREATE TABLE `beitrag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `beitrag`
+-- Daten für Tabelle `beitrag`
 --
 
 INSERT INTO `beitrag` (`beitragid`, `text`, `titel`, `erstelltAm`, `autor`, `tag`) VALUES
@@ -152,12 +153,13 @@ INSERT INTO `beitrag` (`beitragid`, `text`, `titel`, `erstelltAm`, `autor`, `tag
 (49, '', 'Trump sucht Namen', '2026-03-16 22:27:21', 20, 'News'),
 (50, '', 'Kundensupport mal richtig', '2026-03-16 22:30:20', 8, 'Sonstiges'),
 (51, '', 'Me after Abitur', '2026-03-16 22:43:43', 16, 'Memes'),
-(52, '', 'Informatik Memes', '2026-03-16 22:45:51', 15, 'Memes');
+(52, '', 'Informatik Memes', '2026-03-16 22:45:51', 15, 'Memes'),
+(53, '', 'No Haydn', '2026-03-17 09:23:03', 23, 'Memes');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bild`
+-- Tabellenstruktur für Tabelle `bild`
 --
 
 CREATE TABLE `bild` (
@@ -167,7 +169,7 @@ CREATE TABLE `bild` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `bild`
+-- Daten für Tabelle `bild`
 --
 
 INSERT INTO `bild` (`bildid`, `dateiname`, `beitragid`) VALUES
@@ -250,12 +252,13 @@ INSERT INTO `bild` (`bildid`, `dateiname`, `beitragid`) VALUES
 (77, '5e6d5031-c55b-4e0d-a8c4-2e8deab08529.jpg', 52),
 (78, '948d928b-b4ee-4d3e-8eef-ee31d208ecf6.png', 52),
 (79, 'de9c22d0-bb28-4de4-aafd-3d07fd64afd7.jpg', 52),
-(80, '7342f0c4-d72f-4a39-bf57-ead6eb9dcef3.jpg', 52);
+(80, '7342f0c4-d72f-4a39-bf57-ead6eb9dcef3.jpg', 52),
+(81, '699198ac-6465-4b0f-8d17-2f8b568d6fb4.jpg', 53);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat`
+-- Tabellenstruktur für Tabelle `chat`
 --
 
 CREATE TABLE `chat` (
@@ -264,7 +267,7 @@ CREATE TABLE `chat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chat`
+-- Daten für Tabelle `chat`
 --
 
 INSERT INTO `chat` (`chatId`, `erstelltAm`) VALUES
@@ -283,7 +286,7 @@ INSERT INTO `chat` (`chatId`, `erstelltAm`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chatnachricht`
+-- Tabellenstruktur für Tabelle `chatnachricht`
 --
 
 CREATE TABLE `chatnachricht` (
@@ -295,7 +298,7 @@ CREATE TABLE `chatnachricht` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chatnachricht`
+-- Daten für Tabelle `chatnachricht`
 --
 
 INSERT INTO `chatnachricht` (`nachrichtId`, `chatId`, `senderId`, `text`, `gesendetAm`) VALUES
@@ -319,7 +322,7 @@ INSERT INTO `chatnachricht` (`nachrichtId`, `chatId`, `senderId`, `text`, `gesen
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chatteilnehmer`
+-- Tabellenstruktur für Tabelle `chatteilnehmer`
 --
 
 CREATE TABLE `chatteilnehmer` (
@@ -328,7 +331,7 @@ CREATE TABLE `chatteilnehmer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chatteilnehmer`
+-- Daten für Tabelle `chatteilnehmer`
 --
 
 INSERT INTO `chatteilnehmer` (`chatId`, `nutzerId`) VALUES
@@ -358,7 +361,7 @@ INSERT INTO `chatteilnehmer` (`chatId`, `nutzerId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kommentar`
+-- Tabellenstruktur für Tabelle `kommentar`
 --
 
 CREATE TABLE `kommentar` (
@@ -371,7 +374,7 @@ CREATE TABLE `kommentar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `kommentar`
+-- Daten für Tabelle `kommentar`
 --
 
 INSERT INTO `kommentar` (`kommentarid`, `nachricht`, `timestamp`, `beitragId`, `autor`, `oberKommentarId`) VALUES
@@ -402,7 +405,7 @@ INSERT INTO `kommentar` (`kommentarid`, `nachricht`, `timestamp`, `beitragId`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
+-- Tabellenstruktur für Tabelle `likes`
 --
 
 CREATE TABLE `likes` (
@@ -411,7 +414,7 @@ CREATE TABLE `likes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `likes`
+-- Daten für Tabelle `likes`
 --
 
 INSERT INTO `likes` (`nutzerId`, `beitragId`) VALUES
@@ -516,7 +519,7 @@ INSERT INTO `likes` (`nutzerId`, `beitragId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nutzer`
+-- Tabellenstruktur für Tabelle `nutzer`
 --
 
 CREATE TABLE `nutzer` (
@@ -529,7 +532,7 @@ CREATE TABLE `nutzer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `nutzer`
+-- Daten für Tabelle `nutzer`
 --
 
 INSERT INTO `nutzer` (`nutzerId`, `benutzerName`, `passwort`, `email`, `zuletztAktiv`, `profilBild`) VALUES
@@ -547,49 +550,49 @@ INSERT INTO `nutzer` (`nutzerId`, `benutzerName`, `passwort`, `email`, `zuletztA
 (12, 'Lina_Seidel', 'xiHcU2ER+hcMJbMZWYne/di44ZGxzGqMexjilXC9AunmkS5W4yqkWyIX4x/CL3nw', 'lina.seidel@email.com', '2026-03-16 22:13:42', 'fc60d7e0-8bf8-4ce5-ab51-7e864198a42c.png'),
 (13, 'David_Koch', '4Zig9vQJVMUXr5P2AWQAj0UdoJlRnbspG/6ryljBOsPr/ccBrrise6SKJACKTx8d', 'david.koch@email.com', '2026-03-16 22:07:59', '913f2d65-f674-46f2-85c0-6e0119191db4.jpg'),
 (14, 'Julia_Mayer', 'KJnd6wJMclmmjeQ3UZcyQZ9jmUiC4JhQadPGen20u3RxNx0Z6P7QnK5BKsNAZL3L', 'julia.mayer@email.com', '2026-03-16 22:33:25', '164a9385-9a15-473e-9834-016ccaa7e6fb.jpg'),
-(15, 'hilfe', 'NyUop4mD8NGZy/iycRNpab2Z402WduXNI2lj/qfguaViYw1qLOi61Cflw9N5EP6v', 'Email Eingeben', '2026-03-16 22:45:51', '7823d15d-4181-4507-9f1e-904604b98283.jpg'),
-(16, 'GenerischerNutzer', '2esuG9LyVq8tDnqesU9qFaUMuf8DWIv/r5sH2soah203uU1AQ2djSZpAuFWZomfd', 'generischer@de', '2026-03-16 22:52:09', 'c905240d-4a21-48c6-a39e-ca4d68643a03.png'),
+(15, 'hilfe', 'NyUop4mD8NGZy/iycRNpab2Z402WduXNI2lj/qfguaViYw1qLOi61Cflw9N5EP6v', 'Email Eingeben', '2026-03-17 09:09:54', '7823d15d-4181-4507-9f1e-904604b98283.jpg'),
+(16, 'GenerischerNutzer', '2esuG9LyVq8tDnqesU9qFaUMuf8DWIv/r5sH2soah203uU1AQ2djSZpAuFWZomfd', 'generischer@de', '2026-03-16 22:46:15', 'c905240d-4a21-48c6-a39e-ca4d68643a03.png'),
 (17, 'DonaldNews', 'HY1s2KohW82s59jh0H23iT0bdYAkAbTIMYFtNkpKwtECGBk6KAZt6cNHehmVfTSJ', 'donalds@gmail.com', '2026-03-16 22:31:29', '37d23bfc-1df6-4021-b65f-8e103ed38c4b.png'),
 (18, 'Obama@news', 'qDNTrEmomxJBg0jS1XD+7IxwmHQZu6saJaHnMsVroAsecJgNJeXfnXwP9r3zeup5', 'obama@usa', '2026-03-15 21:28:59', 'a28c876d-38c2-411d-9977-6ec3723fa023.jpg'),
 (19, 'MSNBC', 'XZQI9lrlb6lQxfhAowdjjH1kTMeyIopoi2wHZ+pJjTCsuk81TcQ5lK0IsY1/NEUk', 'msnbc@gmail.com', '2026-03-15 21:54:31', '96743c21-6594-4b99-b61d-6aa1ff23b036.png'),
 (20, 'shit@news', 'J3PV6RAPKXPOnpBcQiGWbHvxDi9ye03rWNvVRWioNdDnO6Ny4WxYc9zGNNEQrnx1', 'shitnews@usa', '2026-03-16 22:27:21', '48720c5b-fc75-4a58-87bd-a7eb96635dff.jpg'),
 (21, 'Angela_Mergel', 'WKD99FT17NSi0u6waojZe5+GqhEEJ1ypeG43p6pvp+plUxF4z6Z6tT/YamW6l9fF', 'angela.merkel@deutschland', '2026-03-15 22:18:23', 'd6da40fa-496d-4a13-b36d-78ac80be839f.jpg'),
 (22, 'Welsing', 'tRwYvKG7fziaLlDgiLTGdT6mIS/KpzYGpdM283t13IUBG557pE/pECYGtIDjI+81', 'wels.van@welsingen', '2026-03-15 23:07:43', 'b0cfc97d-8bdb-4c1b-97ad-706b9d4649e5.jpg'),
-(23, 'just', 'QhLYG91uNCnOFDKYeuUrzWsnhlf4ep2YIiVOiA0ulkc/NiMUDE6//MSmfNy6/Wg+', 'just@en.biber', '2026-03-16 20:49:41', NULL);
+(23, 'just', 'QhLYG91uNCnOFDKYeuUrzWsnhlf4ep2YIiVOiA0ulkc/NiMUDE6//MSmfNy6/Wg+', 'just@en.biber', '2026-03-17 09:23:03', '3f7052b4-cbf5-4990-98d0-1d8d2c32fd19.jpg');
 
 --
--- Indexes for dumped tables
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `abonnement`
+-- Indizes für die Tabelle `abonnement`
 --
 ALTER TABLE `abonnement`
   ADD PRIMARY KEY (`abonnentId`,`abonnierteNutzerId`),
   ADD KEY `abonnierteNutzerFK` (`abonnierteNutzerId`);
 
 --
--- Indexes for table `beitrag`
+-- Indizes für die Tabelle `beitrag`
 --
 ALTER TABLE `beitrag`
   ADD PRIMARY KEY (`beitragid`),
   ADD KEY `autorFK` (`autor`);
 
 --
--- Indexes for table `bild`
+-- Indizes für die Tabelle `bild`
 --
 ALTER TABLE `bild`
   ADD PRIMARY KEY (`bildid`),
   ADD KEY `help` (`beitragid`);
 
 --
--- Indexes for table `chat`
+-- Indizes für die Tabelle `chat`
 --
 ALTER TABLE `chat`
   ADD PRIMARY KEY (`chatId`);
 
 --
--- Indexes for table `chatnachricht`
+-- Indizes für die Tabelle `chatnachricht`
 --
 ALTER TABLE `chatnachricht`
   ADD PRIMARY KEY (`nachrichtId`),
@@ -597,14 +600,14 @@ ALTER TABLE `chatnachricht`
   ADD KEY `chat2FK` (`chatId`);
 
 --
--- Indexes for table `chatteilnehmer`
+-- Indizes für die Tabelle `chatteilnehmer`
 --
 ALTER TABLE `chatteilnehmer`
   ADD PRIMARY KEY (`chatId`,`nutzerId`),
   ADD KEY `nutzerFK` (`nutzerId`);
 
 --
--- Indexes for table `kommentar`
+-- Indizes für die Tabelle `kommentar`
 --
 ALTER TABLE `kommentar`
   ADD PRIMARY KEY (`kommentarid`),
@@ -613,97 +616,97 @@ ALTER TABLE `kommentar`
   ADD KEY `asd` (`autor`);
 
 --
--- Indexes for table `likes`
+-- Indizes für die Tabelle `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`nutzerId`,`beitragId`),
   ADD KEY `beitragIDFK` (`beitragId`);
 
 --
--- Indexes for table `nutzer`
+-- Indizes für die Tabelle `nutzer`
 --
 ALTER TABLE `nutzer`
   ADD PRIMARY KEY (`nutzerId`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `beitrag`
+-- AUTO_INCREMENT für Tabelle `beitrag`
 --
 ALTER TABLE `beitrag`
-  MODIFY `beitragid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `beitragid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- AUTO_INCREMENT for table `bild`
+-- AUTO_INCREMENT für Tabelle `bild`
 --
 ALTER TABLE `bild`
-  MODIFY `bildid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `bildid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
--- AUTO_INCREMENT for table `chat`
+-- AUTO_INCREMENT für Tabelle `chat`
 --
 ALTER TABLE `chat`
   MODIFY `chatId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `chatnachricht`
+-- AUTO_INCREMENT für Tabelle `chatnachricht`
 --
 ALTER TABLE `chatnachricht`
   MODIFY `nachrichtId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT for table `kommentar`
+-- AUTO_INCREMENT für Tabelle `kommentar`
 --
 ALTER TABLE `kommentar`
   MODIFY `kommentarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `nutzer`
+-- AUTO_INCREMENT für Tabelle `nutzer`
 --
 ALTER TABLE `nutzer`
   MODIFY `nutzerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- Constraints for dumped tables
+-- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints for table `abonnement`
+-- Constraints der Tabelle `abonnement`
 --
 ALTER TABLE `abonnement`
   ADD CONSTRAINT `abonnentFk` FOREIGN KEY (`abonnentId`) REFERENCES `nutzer` (`nutzerId`),
   ADD CONSTRAINT `abonnierteNutzerFK` FOREIGN KEY (`abonnierteNutzerId`) REFERENCES `nutzer` (`nutzerId`);
 
 --
--- Constraints for table `beitrag`
+-- Constraints der Tabelle `beitrag`
 --
 ALTER TABLE `beitrag`
   ADD CONSTRAINT `autorFK` FOREIGN KEY (`autor`) REFERENCES `nutzer` (`nutzerId`);
 
 --
--- Constraints for table `bild`
+-- Constraints der Tabelle `bild`
 --
 ALTER TABLE `bild`
   ADD CONSTRAINT `help` FOREIGN KEY (`beitragid`) REFERENCES `beitrag` (`beitragid`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `chatnachricht`
+-- Constraints der Tabelle `chatnachricht`
 --
 ALTER TABLE `chatnachricht`
   ADD CONSTRAINT `chat2FK` FOREIGN KEY (`chatId`) REFERENCES `chat` (`chatId`),
   ADD CONSTRAINT `senderFK` FOREIGN KEY (`senderId`) REFERENCES `nutzer` (`nutzerId`);
 
 --
--- Constraints for table `chatteilnehmer`
+-- Constraints der Tabelle `chatteilnehmer`
 --
 ALTER TABLE `chatteilnehmer`
   ADD CONSTRAINT `chatFK` FOREIGN KEY (`chatId`) REFERENCES `chat` (`chatId`),
   ADD CONSTRAINT `nutzerFK` FOREIGN KEY (`nutzerId`) REFERENCES `nutzer` (`nutzerId`);
 
 --
--- Constraints for table `kommentar`
+-- Constraints der Tabelle `kommentar`
 --
 ALTER TABLE `kommentar`
   ADD CONSTRAINT `asd` FOREIGN KEY (`autor`) REFERENCES `nutzer` (`nutzerId`),
@@ -711,7 +714,7 @@ ALTER TABLE `kommentar`
   ADD CONSTRAINT `oberKommentarId` FOREIGN KEY (`oberKommentarId`) REFERENCES `kommentar` (`kommentarid`);
 
 --
--- Constraints for table `likes`
+-- Constraints der Tabelle `likes`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `beitragIDFK` FOREIGN KEY (`beitragId`) REFERENCES `beitrag` (`beitragid`),
