@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2026 at 10:47 PM
+-- Generation Time: Mar 16, 2026 at 11:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,6 +44,7 @@ INSERT INTO `abonnement` (`abonnentId`, `abonnierteNutzerId`) VALUES
 (1, 8),
 (1, 12),
 (1, 15),
+(1, 16),
 (1, 22),
 (2, 3),
 (2, 8),
@@ -56,6 +57,7 @@ INSERT INTO `abonnement` (`abonnentId`, `abonnierteNutzerId`) VALUES
 (5, 3),
 (5, 16),
 (5, 17),
+(6, 16),
 (7, 22),
 (8, 14),
 (9, 4),
@@ -63,11 +65,14 @@ INSERT INTO `abonnement` (`abonnentId`, `abonnierteNutzerId`) VALUES
 (9, 17),
 (10, 11),
 (10, 12),
+(10, 16),
 (12, 8),
 (14, 7),
+(14, 16),
 (14, 17),
 (15, 1),
 (16, 10),
+(17, 16),
 (17, 20),
 (18, 10),
 (18, 13),
@@ -485,6 +490,9 @@ INSERT INTO `likes` (`nutzerId`, `beitragId`) VALUES
 (16, 4),
 (16, 8),
 (16, 11),
+(16, 19),
+(16, 46),
+(16, 48),
 (17, 1),
 (17, 4),
 (17, 8),
@@ -540,7 +548,7 @@ INSERT INTO `nutzer` (`nutzerId`, `benutzerName`, `passwort`, `email`, `zuletztA
 (13, 'David_Koch', '4Zig9vQJVMUXr5P2AWQAj0UdoJlRnbspG/6ryljBOsPr/ccBrrise6SKJACKTx8d', 'david.koch@email.com', '2026-03-16 22:07:59', '913f2d65-f674-46f2-85c0-6e0119191db4.jpg'),
 (14, 'Julia_Mayer', 'KJnd6wJMclmmjeQ3UZcyQZ9jmUiC4JhQadPGen20u3RxNx0Z6P7QnK5BKsNAZL3L', 'julia.mayer@email.com', '2026-03-16 22:33:25', '164a9385-9a15-473e-9834-016ccaa7e6fb.jpg'),
 (15, 'hilfe', 'NyUop4mD8NGZy/iycRNpab2Z402WduXNI2lj/qfguaViYw1qLOi61Cflw9N5EP6v', 'Email Eingeben', '2026-03-16 22:45:51', '7823d15d-4181-4507-9f1e-904604b98283.jpg'),
-(16, 'GenerischerNutzer', '2esuG9LyVq8tDnqesU9qFaUMuf8DWIv/r5sH2soah203uU1AQ2djSZpAuFWZomfd', 'generischer@de', '2026-03-16 22:46:15', 'c905240d-4a21-48c6-a39e-ca4d68643a03.png'),
+(16, 'GenerischerNutzer', '2esuG9LyVq8tDnqesU9qFaUMuf8DWIv/r5sH2soah203uU1AQ2djSZpAuFWZomfd', 'generischer@de', '2026-03-16 22:52:09', 'c905240d-4a21-48c6-a39e-ca4d68643a03.png'),
 (17, 'DonaldNews', 'HY1s2KohW82s59jh0H23iT0bdYAkAbTIMYFtNkpKwtECGBk6KAZt6cNHehmVfTSJ', 'donalds@gmail.com', '2026-03-16 22:31:29', '37d23bfc-1df6-4021-b65f-8e103ed38c4b.png'),
 (18, 'Obama@news', 'qDNTrEmomxJBg0jS1XD+7IxwmHQZu6saJaHnMsVroAsecJgNJeXfnXwP9r3zeup5', 'obama@usa', '2026-03-15 21:28:59', 'a28c876d-38c2-411d-9977-6ec3723fa023.jpg'),
 (19, 'MSNBC', 'XZQI9lrlb6lQxfhAowdjjH1kTMeyIopoi2wHZ+pJjTCsuk81TcQ5lK0IsY1/NEUk', 'msnbc@gmail.com', '2026-03-15 21:54:31', '96743c21-6594-4b99-b61d-6aa1ff23b036.png'),

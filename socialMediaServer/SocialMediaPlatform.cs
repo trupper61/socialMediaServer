@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 using Mysqlx;
 using System.Drawing;
 using static Org.BouncyCastle.Asn1.Cmp.Challenge;
+using socialMedia;
 namespace socialMediaServer
 {
     public class SocialMediaPlatform //Größtenteils für die Handhabung zwischen Server und Datenbankanbindung zuständig.

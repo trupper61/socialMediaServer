@@ -1,11 +1,10 @@
-﻿using Org.BouncyCastle.Asn1;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace socialMediaServer
+namespace socialMedia
 {
     public class Beitrag
     {

@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
-
+using socialMedia;
 namespace socialMediaServer
 {
     public class ServerThread

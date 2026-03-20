@@ -1,4 +1,4 @@
-﻿using socialMediaServer;
+﻿using socialMedia;
 using SocketAbi;
 using System;
 using System.Collections.Generic;
